@@ -1,0 +1,65 @@
+<%- include('partials/header')  %>
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup" id="cpin">
+        <div class="container1" style="width: 1355px !important; max-width: 1500px !important;">
+            <div class="signup-content" style="    padding: 75px 75px;
+            display: flex;
+            flex-direction: column;">
+                <div><h2 class="form-title">Paid Property Tax Details </h2></div>
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">User ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Aadhar Number</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                      </tr>
+                    </thead>
+                        <!-- <tr>
+                            <th>0</th>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>NONE</td>
+                            </tr> -->
+                    <% for(let i=0; i< doc.length ;i++){ %>
+                        <tr>
+                          <th scope="row"><%= doc[i].id %></th>
+                          <td><%= doc[i].name %></td>
+                          <td><%= doc[i].aadharId %></td>
+                          <td><%= doc[i].mobileNumber %></td>
+                          <td><%= doc[i].district %></td>
+                          <td><%= doc[i].state %></td>
+
+            
+                        </tr>
+                    <% } %>
+                  </table>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<%- include('partials/footer') %>   

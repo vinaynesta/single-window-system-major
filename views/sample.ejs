@@ -1,0 +1,339 @@
+<%- include('partials/header')  %>
+ 
+
+<% let a = user._doc %>
+
+
+<div class="main">
+    <% let keys = Object.keys(doc[0]) %>
+    <% for(let i=0;i < doc.length;i++){ %>
+        <div id ="fuck<%=doc[i].zoneId %>" data-fap="<%= JSON.stringify(doc[i]) %>"></div>    
+    <% } %>
+    <section class="sign-in">
+        <div class="container1">
+            <div class="row profile">
+                <div class="col-sm-12">
+                    <div class="col-sm-5" >
+                        <div class="prof-links prof-links1 prof-links2">
+                            <div id="ps"  >
+                                <i class="fa fa-user-circle-o" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                <span style="font-size: 16px  !important; margin-left: 16px;">Zone <span id="thisID">id</span></span>
+                            </div>
+                                <div id="ep"  class="hero" >
+                                    <i class="fa fa-user-circle-o" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                    <span style="font-size: 16px  !important; margin-left: 16px;">Building Classification</span>
+                                </div>
+                                <div id="cx"  class="hero" >
+                                    <i class="fa fa-money" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                    <span style="font-size: 16px  !important; margin-left: 16px;">Nature of Usage</span>
+                                </div>
+                                <div id="ct"  class="hero" >
+                                    <i class="fa fa-money" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                    <span style="font-size: 16px  !important; margin-left: 16px;">Floor No.</span>
+                                </div>
+                                <div id="dss"  class="hero" > 
+                                    <i class="fa fa-user-circle-o" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                    <span style="font-size: 16px  !important; margin-left: 16px;">Occupancy</span>
+                                </div>
+                                <div id="dsv"  class="hero" >
+                                    <i class="fa fa-user-circle-o" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                    <span style="font-size: 16px  !important; margin-left: 16px;">Construction Date</span>
+                                </div>
+                                <div id="mp" class="hero"  >
+                                    <i class="fa fa-user-circle-o" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                    <span style="font-size: 16px  !important; margin-left: 16px;">Constructed Plinth Area</span>
+                                </div>
+                                <div id="cashtrans"   class="hero">
+                                    <i class="fa fa-user-circle-o" style="font-size: 26px  !important;" aria-hidden="true"></i>
+                                    <span style="font-size: 16px  !important; margin-left: 16px;">Plinth Area in Building plan</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7" >
+                        <form id="zone-form">
+                            <div class="venommmm"> 
+                               
+                                <div id="ps1" >
+                                    <h2 class="form-title">Zone Details</h2>
+                                    
+                                        <div class="form-group">
+                                            <label for="name"><i>Zone ID:</i></label>
+                                            <input type="text" name="zoneId" id="zoneId"  style="width:70%;border-left: 180px solid white;"placeholder="Zone id"/>
+                                        </div>
+                                        <center><button class="form-submit" onclick="event.preventDefault()" id="zoned" >Next</button></center>
+                                    
+                            </div>
+                            <div id="ep1"  >
+                                    <h2 class="form-title">Building Classification</h2>
+                                    <div class="floor">
+                                        <div class="form-group">
+                                            <label for="name"><i>Hut</i></label>
+                                            <input type="text" name="huts"   style="width:70%;border-left: 180px solid white;"placeholder="Huts"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>JackArch</i></label>
+                                            <input type="text" name="jackArch"   style="width:70%;border-left: 180px solid white;"placeholder="jackArch"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Slates</i></label>
+                                            <input type="text" name="slates"   style="width:70%;border-left: 180px solid white;"placeholder="Slates"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>RCC</i></label>
+                                            <input type="text" name="rcc"   style="width:70%;border-left: 180px solid white;"placeholder="Rcc"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>RccHighRise</i></label>
+                                            <input type="text" name="rccHighRise"   style="width:70%;border-left: 180px solid white;"placeholder="RccHighRise"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>AccSheetEx</i></label>
+                                            <input type="text" name="accSheetEx"   style="width:70%;border-left: 180px solid white;"placeholder="AccSheetEx"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>AccSheet</i></label>
+                                            <input type="text" name="accSheet"   style="width:70%;border-left: 180px solid white;"placeholder="AccSheet"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>MadrasTerrace</i></label>
+                                            <input type="text" name="madrasTerrace"   style="width:70%;border-left: 180px solid white;"placeholder="madrasTerrace"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>country Tiled</i></label>
+                                            <input type="text" name="countryTiled"   style="width:70%;border-left: 180px solid white;"placeholder="country Tiled"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>GiSheet</i></label>
+                                            <input type="text" name="giSheet"   style="width:70%;border-left: 180px solid white;"placeholder="giSheet"/>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                                <div id="dss1" >
+                                    <h2 class="form-title" >Occupancy</h2>
+                                    
+                                <div class="form-group">
+                                    <label for="name"><i>Commercial</i></label>
+                                    <input type="text" name="commercial"   style="width:70%;border-left: 180px solid white;"placeholder="commercial"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name"><i>Owner</i></label>
+                                    <input type="text" name="owner"   style="width:70%;border-left: 180px solid white;"placeholder="owner"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name"><i>Tenant</i></label>
+                                    <input type="text" name="tenant"   style="width:70%;border-left: 180px solid white;"placeholder="Tenant"/>
+                                </div>
+                            </div>
+                                <div id="ct1" >
+                                    <h2 class="form-title" >Floor Number</h2>
+                                <div class="floor">    
+                                    <div class="form-group">
+                                        <label for="name"><i>Cellar</i></label>
+                                        <input type="text" name="cellar"   style="width:70%;border-left: 180px solid white;"placeholder="Cellar"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Mezzanine</i></label>
+                                        <input type="text" name="mezzanine"  style="width:70%;border-left: 180px solid white;"placeholder="Mezzanine"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Parking</i></label>
+                                        <input type="text" name="parking"  style="width:70%;border-left: 180px solid white;"placeholder="Parking"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>basement2</i></label>
+                                        <input type="text" name="basement2"  style="width:70%;border-left: 180px solid white;"placeholder="basement2"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>basement1</i></label>
+                                        <input type="text" name="basement1"  style="width:70%;border-left: 180px solid white;"placeholder="Basement1"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>slith Floor</i></label>
+                                        <input type="text" name="slitFloor"  style="width:70%;border-left: 180px solid white;"placeholder="SlithFloor"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Ground Floor</i></label>
+                                        <input type="text" name="groundFloor"  style="width:70%;border-left: 180px solid white;"placeholder="Ground Floor"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor1</i></label>
+                                        <input type="text" name="floor1"  style="width:70%;border-left: 180px solid white;"placeholder="Floor1"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor2</i></label>
+                                        <input type="text" name="floor2"  style="width:70%;border-left: 180px solid white;"placeholder="Floor2"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor3</i></label>
+                                        <input type="text" name="floor3"  style="width:70%;border-left: 180px solid white;"placeholder="Floor3"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor4</i></label>
+                                        <input type="text" name="floor4"  style="width:70%;border-left: 180px solid white;"placeholder="Floor4"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor5</i></label>
+                                        <input type="text" name="floor5"  style="width:70%;border-left: 180px solid white;"placeholder="Floor5"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor6</i></label>
+                                        <input type="text" name="floor6"  style="width:70%;border-left: 180px solid white;"placeholder="Floor6"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor7</i></label>
+                                        <input type="text" name="floor7"  style="width:70%;border-left: 180px solid white;"placeholder="Floor7"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor8</i></label>
+                                        <input type="text" name="floor8"  style="width:70%;border-left: 180px solid white;"placeholder="Floor8"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><i>Floor9</i></label>
+                                        <input type="text" name="floor9"  style="width:70%;border-left: 180px solid white;"placeholder="Floor9"/>
+                                    </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Floor10</i></label>
+                                            <input type="text" name="floor10"  style="width:70%;border-left: 180px solid white;"placeholder="Floor10"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Floor11</i></label>
+                                            <input type="text" name="floor11"  style="width:70%;border-left: 180px solid white;"placeholder="Floor11"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Floor12</i></label>
+                                            <input type="text" name="floor12"  style="width:70%;border-left: 180px solid white;"placeholder="Floor12"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Floor13</i></label>
+                                            <input type="text" name="floor13"  style="width:70%;border-left: 180px solid white;"placeholder="Floor13"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Floor14</i></label>
+                                            <input type="text" name="floor14"  style="width:70%;border-left: 180px solid white;"placeholder="Floor14"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Floor15</i></label>
+                                            <input type="text" name="floor15"  style="width:70%;border-left: 180px solid white;"placeholder="Floor15"/>
+                                        </div>
+                                </div>
+                                </div>
+                                <div id="cx1"  >
+                                    <h2 class="form-title">Nature of Usage</h2>
+                                    <div class="floor">
+                                        <div class="form-group">
+                                            <label for="name"><i>Residence</i></label>
+                                            <input type="text" name="residence"  style="width:70%;border-left: 180px solid white;"placeholder="residence"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>shops</i></label>
+                                            <input type="text" name="shops"  style="width:70%;border-left: 180px solid white;"placeholder="shops"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Office Complex</i></label>
+                                            <input type="text" name="officeComplex"  style="width:70%;border-left: 180px solid white;"placeholder="OfficeComplex"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Hospitals</i></label>
+                                            <input type="text" name="hospitals"  style="width:70%;border-left: 180px solid white;"placeholder="Hospitals"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Educational Institutions</i></label>
+                                            <input type="text" name="educationalInstitutions"  style="width:70%;border-left: 180px solid white;"placeholder="Educational Institutions"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Godowns Other Business</i></label>
+                                            <input type="text" name="godownsOtherBusiness"  style="width:70%;border-left: 180px solid white;"placeholder="Godowns Other Business"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Industries</i></label>
+                                            <input type="text" name="industries"  style="width:70%;border-left: 180px solid white;"placeholder="Industries"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Cinema Theatres</i></label>
+                                            <input type="text" name="cinemaTheaters"  style="width:70%;border-left: 180px solid white;"placeholder="CinemaTheatres"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Others</i></label>
+                                            <input type="text" name="others"  style="width:70%;border-left: 180px solid white;"placeholder="Others"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Shops on Mainroad</i></label>
+                                            <input type="text" name="shopsOnMainroad"  style="width:70%;border-left: 180px solid white;"placeholder="Shops On Mainroad"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>ATM</i></label>
+                                            <input type="text" name="atms"  style="width:70%;border-left: 180px solid white;"placeholder="ATM"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Hotels</i></label>
+                                            <input type="text" name="hotels"  style="width:70%;border-left: 180px solid white;"placeholder="Hotels"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Restaurants</i></label>
+                                            <input type="text" name="restaurants"  style="width:70%;border-left: 180px solid white;"placeholder="Restaurants"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Lodges</i></label>
+                                            <input type="text" name="lodges"  style="width:70%;border-left: 180px solid white;"placeholder="Lodges"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Banks</i></label>
+                                            <input type="text" name="banks"  style="width:70%;border-left: 180px solid white;"placeholder="Banks"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Cell Towers</i></label>
+                                            <input type="text" name="cellTowers"  style="width:70%;border-left: 180px solid white;"placeholder="Cell Towers"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name"><i>Nursing Hours</i></label>
+                                            <input type="text" name="nursingHours"  style="width:70%;border-left: 180px solid white;"placeholder="Noursing Hours"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+
+                            </div>
+                            
+                        
+
+                        
+                    </div>
+ 
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-7">
+                        <center><button class="form-submit" onclick="event.preventDefault()"  id="zone" style="display: none;">Submit</button></center>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+ 
+ 
+</div>
+ 
+<script>
+    document.getElementById("ps1").style.display ="block"
+    document.getElementById("ep1").style.display ="none"
+    document.getElementById("dss1").style.display ="none"
+    document.getElementById("cx1").style.display ="none"
+    document.getElementById("ct1").style.display ="none"
+    
+</script> 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ 
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+ 
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<link rel="stylesheet" href="logFiles/css/style1.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+ 
+<%- include('partials/footer') %>

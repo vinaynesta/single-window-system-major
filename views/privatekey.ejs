@@ -1,0 +1,46 @@
+<%- include('partials/header')  %>
+<% let a = user._doc %>
+<div class="main">
+
+    <section class="sign-in">
+        <div class="container1" style="width: 655px;" id="amt" data-amt="<%= tax %>">
+            <div class="row profile">
+                <div class="col-sm-12">
+                    <center><h2>Enter Password</h2></center>
+                    <div style="margin-top: 30px;display: flex;flex-direction: column;align-items: center;">
+                        <form  class="register-form" id="pass-form" style="width: 60%;" >
+                           
+                            <div class="form-group">
+                                <label for="password"><i class="zmdi zmdi-lock"></i></label>
+                                <input type="password" name="password"  placeholder="Password" />
+                            </div>
+                    
+                        </form>
+                        <div class="form-group form-button" data-publickey="<%= a._id %>" id="ads1">
+                            <button class="form-submit" id="continue">Continue</button>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<%- include('partials/footer') %>

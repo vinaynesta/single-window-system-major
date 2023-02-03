@@ -1,0 +1,103 @@
+<%- include('partials/header')  %>
+<% let a = user._doc %>
+
+<div class="main">
+
+    <section class="sign-in">
+        <div class="container1">
+            <div class="row profile">
+                <div class="col-sm-12">
+                    <div class="col-sm-4" >
+                        <div>
+                            <img src="img/users/<%= a.photo %>" alt="Avatar" style="width:200; border-radius: 50%;">
+                            <div class="prof-name">
+                                <% if (a.role!="admin"){ %>
+                                    <center><span id="user-profile" style="font-size: 18px;text-transform: capitalize;cursor: pointer;" data-val="<%= a.cpin %>"><%= a.name %></span></center>
+                                    <center><span style="font-size: 14px;"><%= a._id %></span></center>
+                                <% } %>
+                                <% if (a.role=="admin"){ %>
+                                    <center><span id="user-profile" style="font-size: 18px;text-transform: capitalize;cursor: pointer;" data-val="<%= a.cpin %>">Admin</span></center>
+                                    <center><span style="font-size: 14px;">0000000000000000</span></center>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8" style="margin-top: 30px;">
+                        <% if (a.role!="admin"){ %>
+                            <h2>Hello <%= a.name %></h2>
+                        <% } %>
+                        <% if (a.role=="admin"){ %>
+                            <h2>Hello Admin ,</h2>
+                        <% } %>
+                        <div class="prof-links">
+                            
+
+                            <div class="prof-links prof-links1" style="margin-top: 30px;">
+                                <% if (a.role!="admin"){ %>
+                                    <div>
+                                    <i class="fa fa-credit-card-alt" style="font-size: 18px  !important;" data-key="<%= a.privateKey %>" id="pk2" aria-hidden="true"></i>
+                                    <a href="/registrationSWS"><span style="font-size: 16px  !important; margin-left: 16px;">Property Registration</span></a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-credit-card-alt" style="font-size: 18px  !important;" data-key="<%= a.privateKey %>" id="pk2" aria-hidden="true"></i>
+                                    <a href="/transaction"><span style="font-size: 16px  !important; margin-left: 16px;">Tax Transaction</span></a>
+                                </div>
+                                <br>
+                                <a href="/moaaoa" style="color:rgb(232, 8, 8);font-weight: bold;font-size:15px">What is MoA and AoA forms ?</a>
+                                <br>
+                                <% } %>
+                                <% if (a.role=="admin"){ %>
+                                <div>
+                                    <i class="fa fa-credit-card-alt" style="font-size: 18px  !important;" data-key="<%= a.privateKey %>" id="pk2" aria-hidden="true"></i>
+                                    <a href="/registrationSWS"><span style="font-size: 16px  !important; margin-left: 16px;">Company Registration</span></a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>
+                                    <a href="/propertytransfer"><span style="font-size: 16px  !important; margin-left: 16px;">Company Transfer</span></a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>
+                                    <a href="/paid"><span style="font-size: 16px  !important; margin-left: 16px;cursor: pointer;">Paid Members</span></a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>
+                                    <a href="/unpaid"><span style="font-size: 16px  !important; margin-left: 16px;cursor: pointer;">Unpaid Members</span></a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>
+                                    <a href="/zonedetails"><span style="font-size: 16px  !important; margin-left: 16px;cursor: pointer;">Zone Details</span></a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>
+                                    <a href="/ledger"><span style="font-size: 16px  !important; margin-left: 16px;cursor: pointer;">Ledger</span></a>
+                                </div>
+                                
+                                <% } %>
+                                <!-- <div>
+                                    <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>
+                                    <a href="/ledger"><span style="font-size: 16px  !important; margin-left: 16px;cursor: pointer;">Ledger</span></a>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<%- include('partials/footer') %>

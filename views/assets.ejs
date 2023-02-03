@@ -1,0 +1,73 @@
+<%- include('partials/header')  %>
+
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup" id="cpin">
+        <div class="container1" style="width: 1355px !important; max-width: 1500px !important;">
+            <div class="signup-content" style="    padding: 75px 75px;
+            display: flex;
+            flex-direction: column;">
+                <div><h2 class="form-title">Property Tax</h2></div>
+                <table class="table table-striped" style="width:95%" id="passets">
+                    <thead>
+                      <tr>
+                        <th scope="col">propertyid</th>
+                        <th scope="col">Zone</th>
+                        <th scope="col">Property Description</th>
+                        <th scope="col">Property Tax</th>
+                        <th scope="col"> Payment </th>
+                      </tr>
+                    </thead>
+                    <% for(let i=0; i<=doc.length-1;i++){ %>
+                      <% if(doc[i].status!=1){ %>
+                        <tr>
+                           <td><%= doc[i].id %></td>
+                      
+                          <td><%= doc[i].zoneId %></td>
+                          
+                          
+                          <td><%= doc[i].buildingClassification %></td>
+                          
+                          
+                          <td><%= doc[i].tax  %></td>
+                            <td><button class="form-submit payment" onClick="reply_click(this.id)" id="<%= doc[i].id %>" style="margin-top:auto;size:70%;background:green;">Pay</button></td>
+                           <% } %> 
+
+                          
+                          
+
+                        </tr>
+                    <% } %>
+                    
+                  </table>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<script type="text/javascript">
+  function reply_click(id)
+  {
+      location.assign(`/verification?id=${id}`)
+  }
+ 
+</script>
+<%- include('partials/footer') %>   

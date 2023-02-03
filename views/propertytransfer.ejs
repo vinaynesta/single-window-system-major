@@ -1,0 +1,55 @@
+<%- include('partials/header')  %>
+
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup">
+        <div class="container1">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Property Transfer</h2>
+                    <form class="register-form" id="sign-up-form">
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="senderaadhar"  placeholder="Sender Aadhar Card"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="receiveraadhar"  placeholder="Receiver Aadhar Card"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="propertyid"  placeholder="Property ID"/>
+                        </div>
+                    </form>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all Terms of service</label>
+                    </div>
+                    <button class="form-submit" id="signup-submit" >Submit</button>
+                </div>
+                <div class="signup-image">
+                    <figure><img src="logFiles/images/signup-image.jpg" alt="sing up image"></figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<%- include('partials/footer') %>   

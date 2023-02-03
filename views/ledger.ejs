@@ -1,0 +1,79 @@
+<%- include('partials/header')  %>
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup" id="cpin">
+        <div class="container1" style="width: 1355px !important; max-width: 1500px !important;">
+            <div class="signup-content" style="    padding: 75px 75px;
+            display: flex;
+            flex-direction: column;">
+                <div><h2 class="form-title">Ledger</h2></div>
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Zone ID</th>
+                        <th scope="col">previousHashValue</th>
+                        <th scope="col">senderPublicAddress</th>
+                        <th scope="col">receiverPublicAddress</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">presentHashValue</th>
+                        <th scope="col">Date of Payment</th>
+                      </tr>
+                    </thead>
+                        <!-- <tr>
+                            <th>0</th>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>NONE</td>
+                            </tr> -->
+                    <% for(let i=doc.length-1;i>=0;i--){ %>
+                        <% var l = "62b379a3e1209d77a02e8142" %>
+                        <% let ll = l.length %>
+                        <tr>
+                          <th scope="row"><%= doc[i].id %></th>
+                          <% l = doc[i].previousHashValue %>
+                          <td><%= l.substring(0,ll)%></td>
+                          <% let l1 = doc[i].senderPublicAddress %>
+                          <td><%= l1.substring(0,ll) %></td>
+                          
+                          <% let l2 = doc[i].receiverPublicAddress %>
+                          <td><%= l2.substring(0,ll) %></td>
+                          
+                          <% let l3 = doc[i].amount %>
+                          <td><%= l3 %></td>
+                          
+                          <% let l4 = doc[i].hashValue %>
+                          <td><%= l4.substring(0,ll) %></td>
+                          <% let l5 = doc[i].createdAt.getDate()+"-"+doc[i].createdAt.getMonth()+"-"+doc[i].createdAt.getFullYear() %>
+                          <td><%= l5%></td>
+                          
+                          
+
+                        </tr>
+                    <% } %>
+                  </table>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<%- include('partials/footer') %>   

@@ -1,0 +1,101 @@
+
+<%- include('partials/header')  %>
+
+<% let a = user._doc %>
+<div class="main">
+
+    <section class="sign-in">
+        <div class="container1">
+            <div class="row profile">
+                <div class="col-sm-12">
+                    <div class="col-sm-5" >
+                        <div class="prof-links prof-links1 prof-links2">
+                            <img src="img/users/<%= a.photo %>" alt="Avatar" style="margin-left:10px;margin-top:70px;width:250px; border-radius: 50%;">
+                        </div>
+                    </div>
+                    <div class="col-sm-7" >
+                        <div id="ep1">
+                            <h2 class="form-title">Edit / Update Profiles</h2>
+                            <form  class="register-form" id="ep11" style="width: 60%;" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="firstName"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                    <input type="text" name="name"  placeholder="Your First Name" value="<%= a.name %>"readonly/>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <% var currentDate = new Date(a.dateOfBirth); %>
+                                    <% var cd= currentDate.toLocaleDateString('en-US'); %>
+                                    <% cd = cd.split("/")%>
+                                    <% cd = cd[2]+"-"+cd[0]+"-"+cd[1] %>
+                                    <label for="dateOfBirth"><i class="fa fa-calendar-o"></i></label>
+                                    <input type="date" id="dateOfBirth" name="dateOfBirth" value="<%= cd %>"  placeholder="Your Date Of Birth"readonly/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobileNumber"><i class="fa fa-phone"></i></label>
+                                    <input type="number" name="mobileNumber" value="<%= a.mobileNumber%>" placeholder="Your Mobile Number"readonly/ >
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Building Classification</label>
+                                    <input type="text" name="buildingClassification" value="<%= a.buildingClassification%>" placeholder="Build Classification"style="width:70%;border-left: 180px solid white;padding:6px 0px;" readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Floor Number</label>
+                                    <input type="text" name="floorNo"  placeholder="Floor Number" value="<%= a.buildingClassification%>"style="width:70%;border-left: 180px solid white;padding:6px 0px;" readonly />
+                                </div>
+                                <div class="form-group">
+        
+                                    <label for="name">Base Price</label>
+                                    <input type="text" name="baseValue"  placeholder="Base Value" value="<%= a.buildingClassification%>"style="width:70%;border-left: 180px solid white;padding:6px 0px;" readonly />
+        
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Occupancy</label>
+                                    <input type="text" name="occupancy"  placeholder="Occupancy"value="<%= a.occupancy%>" style="width:70%;border-left: 180px solid white;padding:6px 0px;"readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Area</label>
+                                    <input type="text" name="area"  placeholder="Area" value="<%= a.area%>"style="width:70%;border-left: 180px solid white;padding:6px 0px;"readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Construction Date</label>
+                                    <input type="date" name="constructionDate" value="<%= a.onstructionDate%>"  style="width:70%;border-left: 180px solid white;padding:6px 0px;"readonly />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Nature Of Usage</label>
+                                    <input type="text" name="natureOfUsage"value="<%= a.natureOfUsage%>"  placeholder="Nature of Usage" style="width:70%;border-left: 180px solid white;padding:6px 0px;"readonly />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="name">Aadhar Number</label>
+                                    <input type="text" name="aadharId"  value="<%= a.aadharId%>"placeholder="Aadhar Number"style="width:70%;border-left: 180px solid white;padding:6px 0px;" readonly />
+                                </div>
+                                
+                                
+                            </form>
+                            
+                        </div>                  
+
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+
+<%- include('partials/footer') %>

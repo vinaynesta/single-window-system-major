@@ -1,0 +1,79 @@
+<%- include('partials/header')  %>
+ 
+
+<div class="main">
+    <section class="sign-in">
+        <div class="container1">
+            <div class="row profile">
+                <div class="col-sm-12">
+                    
+                    <div class="col-sm-7" >
+                        <form>
+                            <div class="venommmm"> 
+                            <div id="ep1"  >
+                                    <h2 class="form-title">Features</h2>
+                                        <div id="dynamicCheck">
+                                            <input type="button" value="Create Feature" onclick="createNewElement();"/>
+                                         </div>
+                                         
+                                         <div id="newElementId"></div>
+                                         
+        
+                                            <input type="textarea" name="formula"  placeholder="Formula" cols="50" rows="5" style="border:solid 1px black;"/>
+                                         <div class="col-sm-12">
+                                            <div class="col-sm-5"></div>
+                                            <div class="col-sm-7">
+                                                <center><button class="form-submit"   id="zone" ">Submit</button></center>
+                                                
+                                            </div>
+                                        </div>
+                                         
+                                    
+                                    
+                                </div>
+                            
+
+                            </div>
+                            
+                        </div>
+                            
+                        </form>
+
+                        
+                    </div>
+ 
+                
+            
+        </div>
+    </section>
+ 
+ 
+</div>
+<script>
+    var i=1;
+    function createNewElement() {
+        // First create a DIV element.
+        
+        var txtNewInputBox = document.createElement('div');
+    
+        // Then add the content (a new input box) of the element.
+        txtNewInputBox.innerHTML = `${i}. &nbsp;  Feature<input type='text' id='newInputBox' name=${i} placeholder='feature' >  Value <input type='text' id='newInputBox' name=${i} placeholder= 'Value'>`;
+    
+        // Finally put it where it is supposed to appear.
+        document.getElementById("newElementId").appendChild(txtNewInputBox);
+        i=i+1;
+    }
+</script> 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ 
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+ 
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+ 
+<%- include('partials/footer') %>

@@ -1,0 +1,61 @@
+<%- include('partials/header')  %>
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup" id="cpin">
+        <div class="container1">
+            <div class="signup-content" style="    padding: 75px 75px;
+            display: flex;
+            flex-direction: column;">
+                <div><h2 class="form-title">Your Orders</h2></div>
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">coinSent</th>
+                        <th scope="col">coinReceived</th>
+                        <th scope="col">balance </th>
+                        <th scope="col">To</th>
+                        <th scope="col">From</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0;i< orders.length;i++){ %>
+                            <tr>
+                              <th scope="row"><%= i+1 %></th>
+                              <td><%= orders[i].name %></td>
+                              <td><%= orders[i].price %></td>
+                              <td><%= orders[i].coinSent %></td>
+                              <td><%= orders[i].coinReceived %></td>
+                              <td><%= orders[i].balance %></td>
+                              <td><%= orders[i].to %></td>
+                              <td><%= orders[i].from %></td>
+
+                            </tr>
+                        <% } %>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<%- include('partials/footer') %>   

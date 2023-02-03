@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Ministry of Corporate Affairs<%= title %></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Cemre Tellioğlu Tunçay">
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap&subset=latin-ext" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/mystyles.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/responsive.css">
+        <link rel="stylesheet" href="css/sws.css">
+        <script src="/js/ui/vendor/modernizr-2.8.3.min.js"></script>
+        
+        
+
+    </head>
+    <body>
+        <% user =locals.user %>
+		<header class="top">
+                  <div class="fixedArea">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12 noPadding">
+                            <div class="content-wrapper one">
+                                <!-- Main Menu Start -->
+                                <!-- Navbar-->
+                                <header class="header" style="box-shadow: 0 10px 15px rgb(25 25 25 / 10%);">
+                                    <nav class="navbar navbar-default myNavBar">
+                                        <div class="container">
+
+                                            <!-- Brand and toggle get grouped for better mobile display -->
+                                            <div class="navbar-header">
+                                                <div class="row">
+                                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                                        <div class="row">
+                                                            <a href="/">
+                                                                <div class="col-md-9 col-sm-9 col-xs-9" style="display: flex; width: 500px;">
+                                                                    <img class="img-responsive logo"  src="img/bg/govgold.png" alt="restorant" width="35px" height="80px"/>
+                                                                    <!-- <img class="img-responsive logo"  src="img/bg/ministrynamewhite.png" alt="restorant" width="550"/>-->
+                                                                    <div class="headlogo">
+                                                                        <br>
+                                                                        <h6 style="color: white;font-weight: bold;font-size: 22px;">Ministry Of Corporate Affairs</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-3 col-xs-3">
+                                                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                                            <span class="sr-only">Toggle navigation</span>
+                                                            <span class="icon-bar"></span>
+                                                            <span class="icon-bar"></span>
+                                                            <span class="icon-bar"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <!-- Collect the nav links, forms, and other content for toggling -->
+                                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                            <% if( title==''){ %>
+                                            <ul class="nav navbar-nav navbar-right navBar">
+                                                    <li class="nav-item"><a href="#section0" class="nav-link text-uppercase font-weight-bold js-scroll-trigger">Home <span class="sr-only">(current)</span></a></li>
+                                                    <li class="nav-item"><a href="#section1" class="nav-link text-uppercase font-weight-bold js-scroll-trigger">What we provide</a></li>
+                                                    <li class="nav-item"><a href="#section2" class="nav-link text-uppercase font-weight-bold js-scroll-trigger">About</a></li>
+                                                    <li class="nav-item"><a href="#section6" class="nav-link text-uppercase font-weight-bold js-scroll-trigger">Contact</a></li>
+                                                    <li class="nav-item"><a href="#section7" class="nav-link text-uppercase font-weight-bold js-scroll-trigger">Address</a></li>
+                                                    <% if(user){ %>
+                                                        <% let a = user._doc %>
+                                                        <a href="/account"><img src="img/users/<%= a.photo %>" title= "<%= a.name %>" class="user-pic"></a>
+                                                    <%} else { %>
+                                                        <li class="nav-item"><a href="/login" class="nav-link text-uppercase font-weight-bold js-scroll-trigger">login</a></li>
+                                                    <% } %>
+                                                </ul>
+                                                <% } else{ %>
+                                                    <% if(user){ %>
+                                                        <% let a = user._doc %>
+                                                        <% if( title!='privatekey'){ %>
+                                                            <div class="user-details">
+                                                                <h5 style="cursor: pointer;color: rgb(251, 251, 251);"id="user">Welcome, <%=a.name.split(" ")[0] %></h5>
+                                                                <button class="form-submit" id="logout-button">Logout</button>
+                                                            </div>
+                                                        <% } %>       
+                                                    <%} %>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                </header>
+                                <!-- Main Menu End -->
+                            </div>
+						</div>
+                  </div>
+			</div>
+		</header>
