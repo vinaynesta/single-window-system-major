@@ -39,19 +39,16 @@ const createSendToken = (user, statusCode, res) => {
 
 
 exports.signup = catchAsync(async (req, res, next) => {
+  console.log("entered entry point 3 authcontroller");
+  console.log("re body",req.body);
       const newUser = await User.create(req.body);
       createSendToken(newUser, 201, res);
      });
 
-exports.signupSWS = catchAsync(async (req, res, next) => {
-      const newUser = await UserSWS.create(req.body);
-      createSendToken(newUserSWS, 221, res);
-     });
 
 exports.login = catchAsync(async(req,res,next)=>{
     const email = req.body.email;
-    const password = req.body.password;
-    
+    const password = req.body.password;    
     
     if(!email || !password){
         //console.log(email);

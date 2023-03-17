@@ -11,7 +11,7 @@ import { registrationSWS } from './registrationSWS'
 const signupForm = document.querySelector("#sign-up-form");
 
 if (signupForm){
-    $("#signup-submit").click(()=>{
+    /*$("#signup-submit").click(()=>{
         let a=JSON.stringify($('#sign-up-form').serialize()) 
         let res = a.replace(/=/g, '":"');
         res= res.replace(/&/g,'","')
@@ -20,7 +20,7 @@ if (signupForm){
         let c = '{'+res+'}'
         const data = JSON.parse(c)
         //console.log(data)  
-
+        console.log("ENTERED DATAPOINT 1 js/index.js");
         //console.log(data.password,data.passwordConfirm);
         if (data.password === data.passwordConfirm){
             signUp(data)
@@ -29,7 +29,7 @@ if (signupForm){
             showAlert("error","Your Passwords don't match")
         }
 
-    })
+    })*/
 }
 
 
@@ -68,13 +68,15 @@ if (loginForm) {
     })
 }
 
-const registrationFormSWS = document.querySelector("#register-formsws");
-const registerSWSbtn = document.querySelector('#registrationSWS-button');
+const registrationFormSWS = document.querySelector("#register-formSWS");
+console.log(registrationFormSWS)
+//const registerSWSbtn = document.querySelector('#registrationSWS-button');
 
 if (registrationFormSWS) {
 
     $("#registrationSWS-button").click(()=>{
-        let a=JSON.stringify($('#register-formsws').serialize()) 
+        let a=JSON.stringify($('#register-formSWS').serialize()) 
+        console.log(a)
         let res = a.replace(/=/g, '":"');
         res= res.replace(/&/g,'","')
         res= res.replace(/%40/g,'@')

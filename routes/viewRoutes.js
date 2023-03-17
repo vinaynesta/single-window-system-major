@@ -22,7 +22,7 @@ router.get('/payment',authController.isLoggedIn,authController.protect,viewsCont
 router.get('/assets',authController.isLoggedIn,authController.protect,viewsController.assets);
 router.get('/propertytransfer',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.propertyTransfer);
 router.get('/registration',authController.isLoggedIn,viewsController.registration);
-router.get('/registrationSWS',authController.isLoggedIn,authController.protect,viewsController.registrationSWSS);
+router.get('/registrationSWS',authController.isLoggedIn,authController.protect,viewsController.registrationSWS);
 router.get('/moaaoa',authController.isLoggedIn,authController.protect,viewsController.moaaoa);
 router.get('/zonedetails',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.zonedetails);
 router.get('/features',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.features);

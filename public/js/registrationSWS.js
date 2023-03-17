@@ -7,7 +7,7 @@ export const registrationSWS = async (registrationSWSData) => {
     try{
         const res = await axios({
             method: 'POST',
-            url: '/api/v1/usersSWS',
+            url: '/api/v1/usersws',
             data: registrationSWSData
         });
         if(res.data.status==='success'){

@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+const multer = require("multer");
+const {GridFsStorage} = require("multer-gridfs-storage");
+
 process.on('uncaughtException', err => {
     console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
     console.log(err.name, err.message);
@@ -28,6 +31,15 @@ process.on('unhandledRejection', err => {
     server.close(() => {
       process.exit(1);
     });
+});
+
+let bucket;
+mongoose.connection.on("connected", () => {
+  var db = mongoose.connections[0].db;
+  bucket = new mongoose.mongo.GridFSBucket(db, {
+    bucketName: "newBucket"
+  });
+  //console.log(bucket);
 });
 
 //heroku ps:scale web=0

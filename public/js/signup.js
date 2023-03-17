@@ -3,6 +3,7 @@ import { showAlert } from './alert';
 
 
 export const signUp = async (fdata) => {
+    /*console.log("entered point 2 js/signup.js");
 
     try{
         const res = await axios({
@@ -20,5 +21,5 @@ export const signUp = async (fdata) => {
     catch(err){
         showAlert('error',err.response.data.message);
         console.log(err.response.data.message);
-    }
+    }*/
 };

@@ -17,6 +17,7 @@ const viewRouter = require('./routes/viewRoutes');
 const ledgerRouter = require("./routes/ledgerRoutes")
 const propertyRouter = require("./routes/propertyRoutes")
 const ratesRoutes = require('./routes/ratesRoutes')
+const userSWSController = require('./controllers/userSWSController');
 
 const csp = require('express-csp');
 
@@ -33,7 +34,33 @@ app.use(helmet());
 //compression
 app.use(compression());
 
+// pdf uploading packages
+const mongoose = require('mongoose');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
 
+app.use(methodOverride('_method'));
+
+//body and json parsing in express
+var bodyParser = require('body-parser');
+var multer = require('multer');
+var upload = multer();
+
+
+app.use(express.json());
+
+// for parsing application/json
+
+app.use(bodyParser.json()); 
+
+// for parsing application
+app.use(bodyParser.urlencoded({ extended: true })); 
+//form-urlencoded
+
+// for parsing multipart/form-data
+app.use(upload.array()); 
+app.use(express.static('public'));
 
 app.use(
   helmet.contentSecurityPolicy({
@@ -228,14 +255,6 @@ const limiter = rateLimit({
   // Prevent parameter pollution
 
 
-app.use(express.json());
-
-
-
-
-
-
-
 
 app.use('/',viewRouter);
 app.use('/api/v1/users',userRouter);
@@ -243,6 +262,45 @@ app.use('/api/v1/userSWS',userSWSRouter);
 app.use('/api/v1/ledger',ledgerRouter);
 app.use('/api/v1/properties',propertyRouter);
 app.use('/api/v1/rates',ratesRoutes);
+
+//app.post('/registrationSWS',userSWSController.registrationSWS);
+// app.post("/registrationSWS", async function (req, res) {
+// 	console.log("requesttttt",req.body);
+// });
+
+//app.post("/registrationSWS",userSWSController.registrationSWS);
+
+app.post("/portfolio", async function (req, res) {
+	console.log("ans",req.body);
+    /*const port = new portfolio({
+    idea: req.body.idea,
+    ask: req.body.ask,
+    equity: req.body.equity,
+    evaluation: req.body.ask/req.body.equity,
+    mobileNumber: req.body.mobileNumber,
+    email: req.body.email,
+    demoVideoLink: req.body.demoVideoLink
+     });
+    console.log(port);
+    
+    port.save();
+ 
+    uid = req.body.email;
+    console.log("email",uid);
+
+    let pid =port._id;
+    console.log("pid",pid);
+    await Users.findOneAndUpdate(
+        { email: uid, },
+        { $push: { ideas: pid, } ,}
+     );*/
+
+    res.redirect("/account");
+});
+
+app.get("/portfolio", function(req, res){
+	res.render("portfolio");
+});
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());

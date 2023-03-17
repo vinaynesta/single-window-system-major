@@ -141,18 +141,18 @@ exports.registration = catchAsync( async(req,res)=> {
   res.render('registration',{
     title: '| registration',
   })
-  console.log("love you");
+  console.log("love you I");
 });
 
-exports.registrationSWSS = catchAsync( async(req,res)=> {
-  let doc = await UserSWS.find({});
-  console.log(doc);
+exports.registrationSWS = catchAsync( async(req,res)=> {
+  //let doc = await UserSWS.find({});
+  //console.log(doc);
   res.render('registrationSWS',{
     title: '| registrationSWS',
-    doc:doc
+    //doc:doc
   })
-  console.log(req.body);
-  console.log("love you");
+  console.log("lll" ,req.body);
+  console.log("love you beb");
 });
 
 exports.zonedetails = catchAsync( async(req,res)=> {

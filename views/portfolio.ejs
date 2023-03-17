@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <style>
+            body{
+                width: 350px;
+                border: 5px solid black;
+                padding: 60px; 
+                padding-top:30px;
+                margin-top:5px;
+                margin:10px;
+                position:absolute;
+                /*background-image: url("../img/ideabg.jpg");*/
+                background-repeat:no-repeat;
+                background-size:cover;
+                left:27%;
+                font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            } 
+            h2{
+                font-size: xx-large;
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
+
+        </style>
+
+        <body>
+        <center>
+            <h2 style="color: aliceblue;">ENTREPRENEUR'S PORTAL</h2><hr><br>
+            <div id = "f">
+                <form class="portfol" action="/portfolio" method="post">
+                    <label for="idea">Idea:</label><br>
+                    <textarea rows="4" cols="50" id="idea" name="idea"></textarea>
+                    <br><br>
+                    <label for="demoV">Link for Demo:</label><br>
+                    <input type="text" id="demoVideoLink" name="demoVideoLink" placeholder="paste your link here">
+                    <br><br>
+                    <label for="ask">Ask:</label><br>
+                    <span>&#8377</span>
+                    <input type="text" id="ask" name="ask" onkeyup="myFunction()"><br><br>
+                    <label for="equity">Equity:</label><br>
+                    <input type="text" id="equity" name="equity" onkeyup="myFunction()">%<br><br>
+                    <label >Evaluation:</label><br>
+                    <p id="evaluation" name="evaluation"></p><br>
+                    <label for="mobileNumber">Mobile Number:</label><br>
+                    <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="1234567890" pattern="[0-9]{10}" required><br><br>
+                    <label for="mobileNumber">E-mail:</label><br>
+                    <input type="email" id="email" name="email"> <br><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <script>
+                function myFunction() {
+                  var x = Number(document.getElementById("ask").value);
+                  var y = Number(document.getElementById("equity").value);
+                  var e=0;
+                  if(x==""||y==""){
+                    e=0;
+                  }
+                  else{
+                    e=x/y;
+                  }
+                  document.getElementById("evaluation").innerHTML = e;
+                }
+            </script>
+        </center>
+        </body>
+    
+</html>
