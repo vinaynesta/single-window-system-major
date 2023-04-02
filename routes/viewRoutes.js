@@ -6,8 +6,6 @@ const userSWSController = require('./../controllers/userSWSController');
 const router = express.Router();
   
 
-
-
 router.get('/orders',authController.isLoggedIn,authController.protect,viewsController.orders);
 router.get('/ledger',viewsController.ledgerr);
 
@@ -25,6 +23,7 @@ router.get('/registration',authController.isLoggedIn,viewsController.registratio
 router.get('/registrationSWS',authController.isLoggedIn,authController.protect,viewsController.registrationSWS);
 router.get('/namesMatch',authController.isLoggedIn,authController.protect,viewsController.namesMatch);
 router.get('/moaaoa',authController.isLoggedIn,authController.protect,viewsController.moaaoa);
+router.get('/upload',authController.isLoggedIn,authController.protect,viewsController.upload);
 router.get('/zonedetails',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.zonedetails);
 router.get('/features',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.features);
 router.get('/verification',authController.isLoggedIn,authController.protect,viewsController.privatekey);

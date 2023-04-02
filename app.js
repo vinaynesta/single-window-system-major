@@ -11,6 +11,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 
+
 const userRouter = require('./routes/userRoutes');
 const userSWSRouter = require('./routes/userSWSRoutes');
 const viewRouter = require('./routes/viewRoutes');
@@ -19,6 +20,7 @@ const propertyRouter = require("./routes/propertyRoutes")
 const ratesRoutes = require('./routes/ratesRoutes')
 const userSWSController = require('./controllers/userSWSController');
 
+// const pdf2json = require('pdf2json');
 const csp = require('express-csp');
 
 const app = express();
@@ -48,7 +50,27 @@ app.use(methodOverride('_method'));
 //body and json parsing in express
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var upload = multer();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+const pdfSchema = new mongoose.Schema({
+  name: String,
+  data: Buffer,
+  contentType: String
+});
+
+const Pdf = mongoose.model('Pdf', pdfSchema);
+
+app.post('/upload', upload.single('pdf'), async (req, res) => {
+  const pdf = new Pdf({
+    // name: req.file.originalname ,
+    data: req.file.buffer,
+    // contentType: req.file.mimetype,
+  });
+  await pdf.save();
+  res.send('PDF uploaded successfully');
+});
 
 
 
@@ -65,6 +87,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing multipart/form-data
 app.use(upload.array()); 
 app.use(express.static('public'));
+
 
 app.use(
   helmet.contentSecurityPolicy({
@@ -283,6 +306,8 @@ app.use('/api/v1/rates',ratesRoutes);
 
 app.post("/registrationSWS",userSWSController.registrationSWS);
 
+app.post("/namesMatch",userSWSController.compareCompanyNames);
+
 app.post("/match",userSWSController.compareCompanyNames);
 
 app.post("/portfolio", async function (req, res) {
@@ -316,6 +341,39 @@ app.post("/portfolio", async function (req, res) {
 app.get("/portfolio", function(req, res){
 	res.render("portfolio");
 });
+
+
+
+app.get('/pdf', async (req, res) => {
+  try {
+    // const id = '64295cd3bfc053f41a8c8b32';
+    const id = req.query.id;
+    const pdf = await Pdf.findById(id);
+    
+    if (!pdf) {
+      return res.status(404).send('PDF not found');
+    }
+
+    const pdf2jsonModule = await import('pdf2json');
+    const pdf2json = new pdf2jsonModule.default();
+
+    pdf2json.on('pdfParser_dataReady', data => {
+      // const text = pdf2json.getRawTextContent();
+      // let x = data["Transcoder"];
+      res.send(data["Meta"]);
+    });
+
+    pdf2json.parseBuffer(pdf.data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+app.get("/pdfs", async(req,res)=>{
+  var pdfs = await Pdf.find({},{ name: 1, _id: 0 });
+  res.send(pdfs);
+})
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());

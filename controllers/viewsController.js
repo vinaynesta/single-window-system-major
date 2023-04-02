@@ -208,9 +208,15 @@ exports.details = catchAsync( async(req,res)=> {
   })
 });
 
-exports.registrationSWS = catchAsync( async(req,res)=> {
+exports.namesMatch = catchAsync( async(req,res)=> {
   res.render('namesMatch',{
     title: '| namesMatch',
+  })
+});
+
+exports.upload = catchAsync( async(req,res)=> {
+  res.render('upload',{
+    title: '| upload',
   })
 });
 

@@ -5,7 +5,30 @@ const factory = require('./handlerFactory');
 const APIFeatures = require('./../utils/apiFeatures');
 const UserSWS = require('../models/userSWSModel');
 const nodemailer = require('nodemailer');
-const { jaroWinklerDistance } = require('natural');
+const natural = require('natural');
+
+
+
+// import { JaroWinklerDistance } from 'natural';
+const csv = require('csv-parser');
+const fs = require('fs');
+
+// Define the path to the CSV file
+const csvFilePath = './public/data/requiredData.csv';
+
+// Create an empty array to store the data
+const data = [];
+
+// Use the csv-parser module to read the file and convert it to a JavaScript object
+fs.createReadStream(csvFilePath)
+  .pipe(csv())
+  .on('data', (row) => {
+    data.push(row);
+  })
+  .on('end', () => {
+    console.log('CSV file successfully processed.');
+    console.log(data); // The parsed data will be stored in this array
+  });
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -68,14 +91,27 @@ exports.registrationSWS = catchAsync( async(req,res) => {
 
 exports.compareCompanyNames = catchAsync( async(req, res)=> {
     // Normalize company names by removing punctuation and converting to lowercase
-    let name1 = req.body.name1;
-    let name2 = req.body.name2;
-    
-    name1 = name1.replace(/[^\w\s]/g, '').toLowerCase();
-    name2 = name2.replace(/[^\w\s]/g, '').toLowerCase();
+    let name1 = req.body.name1 || "";
+    let name2 = req.body.name2 || "";
+
+    const results = [];
+
+    console.log("name1 , name2 : ",name1 ,name2);
+    console.log("names",data[1].name);
+
+    name1 = name1.replace(/[ -\/]/g, "");
+    console.log("1",name1);
+    name1 = (name1 || "").toLowerCase();
+    console.log("1",name1);
+    name2 = name2.replace(/[^\w\s]/g, '');
+    name2 = (name2 || "").toLowerCase();
+    // name1 = name1.toLowerCase();
   
     // Calculate Jaro-Winkler distance between the two company names
-    const similarityScore = jaroWinklerDistance(name1, name2);
-  
-    return similarityScore;
+    // for( let i=0 ;i<=1000;i++){
+    //     console.log("data "+i+" ",data[i].name);
+    // }
+    const similarityScore = natural.JaroWinklerDistance(name1, name2);
+    console.log("score : ",similarityScore);
+    res.redirect('/account');
   });
