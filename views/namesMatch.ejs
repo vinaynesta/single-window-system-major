@@ -1,0 +1,52 @@
+<%- include('partials/header')  %>
+
+
+<div class="main">
+    
+    <!-- Sign up form -->
+    <section class="signup">
+        <div class="container1">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Names Matching</h2>
+                    <form class="register-form"  method="post" action="/namesMatch" >
+                        <div class="form-group" >
+
+                            <label for="name1" >Name 1</label>
+                            <input type="text" name="name1"  placeholder="Name1"style="width:80%;border-left: 180px solid white;padding:6px 0px;" required />
+
+                        </div>
+                        <div class="form-group">
+
+                            <label for="name2">Name 2</label>
+                            <input type="text" name="name2"  placeholder="Name2"style="width:70%;border-left: 180px solid white;padding:6px 0px;" required />    
+                        </div>
+                        
+                        <input class="form-submit" type="submit" value="submit">   
+                    </form>
+                </div>
+                <!-- <div class="signup-image">
+                    <figure><img src="logFiles/images/signup-image.jpg" alt="sing up image"></figure>
+                    
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" href="logFiles/css/style1.css">
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<%- include('partials/footer') %>   

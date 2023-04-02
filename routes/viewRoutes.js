@@ -23,6 +23,7 @@ router.get('/assets',authController.isLoggedIn,authController.protect,viewsContr
 router.get('/propertytransfer',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.propertyTransfer);
 router.get('/registration',authController.isLoggedIn,viewsController.registration);
 router.get('/registrationSWS',authController.isLoggedIn,authController.protect,viewsController.registrationSWS);
+router.get('/namesMatch',authController.isLoggedIn,authController.protect,viewsController.namesMatch);
 router.get('/moaaoa',authController.isLoggedIn,authController.protect,viewsController.moaaoa);
 router.get('/zonedetails',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.zonedetails);
 router.get('/features',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.features);

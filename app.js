@@ -40,12 +40,16 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 
+//e-mail package
+const nodemailer = require('nodemailer');
+
 app.use(methodOverride('_method'));
 
 //body and json parsing in express
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var upload = multer();
+
 
 
 app.use(express.json());
@@ -234,6 +238,15 @@ if(process.env.NODE_ENV==='development'){
     app.use(morgan('dev'));
 }
 
+exports.transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'vinaynesta2002@gmail.com',
+    pass: 'Tyler@2002'
+  }
+});
+
+
 // Limit requests from same API
 const limiter = rateLimit({
     max: 100,
@@ -263,12 +276,14 @@ app.use('/api/v1/ledger',ledgerRouter);
 app.use('/api/v1/properties',propertyRouter);
 app.use('/api/v1/rates',ratesRoutes);
 
-//app.post('/registrationSWS',userSWSController.registrationSWS);
+// app.post('/registrationSWS',userSWSController.registrationSWS);
 // app.post("/registrationSWS", async function (req, res) {
 // 	console.log("requesttttt",req.body);
 // });
 
-//app.post("/registrationSWS",userSWSController.registrationSWS);
+app.post("/registrationSWS",userSWSController.registrationSWS);
+
+app.post("/match",userSWSController.compareCompanyNames);
 
 app.post("/portfolio", async function (req, res) {
 	console.log("ans",req.body);

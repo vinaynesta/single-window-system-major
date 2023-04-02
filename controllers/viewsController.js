@@ -200,10 +200,17 @@ exports.unpaid = catchAsync( async(req,res)=> {
     doc:doc,
   })
 });
+
 exports.details = catchAsync( async(req,res)=> {
   
   res.render('details',{
     title: '| details',
+  })
+});
+
+exports.registrationSWS = catchAsync( async(req,res)=> {
+  res.render('namesMatch',{
+    title: '| namesMatch',
   })
 });
 
