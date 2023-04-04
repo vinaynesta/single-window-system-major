@@ -220,3 +220,20 @@ exports.upload = catchAsync( async(req,res)=> {
   })
 });
 
+exports.uploadmom = catchAsync( async(req,res)=> {
+  res.render('uploadmom',{
+    title: '| uploadmom',
+  })
+});
+
+exports.namesResults = catchAsync( async(req,res)=> {
+  res.render('namesResults',{
+    title: '| namesResults',
+  })
+});
+
+exports.momresults = catchAsync( async(req,res)=> {
+  res.render('momresults',{
+    title: '| momresults',
+  })
+});

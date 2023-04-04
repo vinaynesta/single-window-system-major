@@ -30,6 +30,8 @@ const upload = multer({
   storage: multerStorage,
   fileFilter: multerFilter
 });
+
+
 exports.uploadUserPhoto = upload.single('photo');
 
 exports.resizeUserPhoto = catchAsync( async (req,res,next) => {

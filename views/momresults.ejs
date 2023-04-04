@@ -1,0 +1,78 @@
+
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup" id="cpin">
+        <div class="container1" style="width: 1355px !important; max-width: 1500px !important;">
+            <div class="signup-content" style="    padding: 75px 75px;
+            display: flex;
+            flex-direction: column;">
+                <div><h2 class="form-title">Ledger</h2></div>
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Sector</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Liability</th>
+                        <th scope="col">Capital</th>
+                      </tr>
+                    </thead>
+                        <!-- <tr>
+                            <th>0</th>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>000</td>
+                            <td>NONE</td>
+                            </tr> -->
+                    <% for(let i=requesterDetails.length-1;i>=0;i--){ %>
+                        
+                        <tr>
+                          <th scope="row"><%= requesterDetails[i]["_id"] %></th>
+                          
+                          <td><%= requesterDetails[i]["sector"]%></td>
+                          
+                          <td><%= requesterDetails[i]["name"] %></td>
+                          
+                          
+                          <td><%= requesterDetails[i]["email"] %></td>
+                          
+                          
+                          <td><%= requesterDetails[i]["state"]%></td>
+                          
+                          
+                          <td><%= requesterDetails[i]["liability"] %></td>
+                          
+                          <td><%= requesterDetails[i]["capital"]%></td>
+                          
+                          
+
+                        </tr>
+                    <% } %>
+                  </table>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+  

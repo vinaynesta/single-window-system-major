@@ -10,7 +10,11 @@ const hpp = require('hpp');
 const globalErrorHandler = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
-
+// const Result = require('./controllers/userSWSController');
+const PDFParser = require('pdf-parse');
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+// const mom = require('./models/momModel');
 
 const userRouter = require('./routes/userRoutes');
 const userSWSRouter = require('./routes/userSWSRoutes');
@@ -18,6 +22,7 @@ const viewRouter = require('./routes/viewRoutes');
 const ledgerRouter = require("./routes/ledgerRoutes")
 const propertyRouter = require("./routes/propertyRoutes")
 const ratesRoutes = require('./routes/ratesRoutes')
+const userController = require('./controllers/userController');
 const userSWSController = require('./controllers/userSWSController');
 
 // const pdf2json = require('pdf2json');
@@ -56,17 +61,18 @@ const upload = multer({ storage: storage });
 
 const pdfSchema = new mongoose.Schema({
   name: String,
-  data: Buffer,
+  buffer: Buffer,
   contentType: String
 });
 
 const Pdf = mongoose.model('Pdf', pdfSchema);
 
 app.post('/upload', upload.single('pdf'), async (req, res) => {
+  console.log(req.file);
   const pdf = new Pdf({
-    // name: req.file.originalname ,
-    data: req.file.buffer,
-    // contentType: req.file.mimetype,
+    name: req.file.originalname ,
+    buffer: req.file.buffer,
+    contentType: req.file.mimetype,
   });
   await pdf.save();
   res.send('PDF uploaded successfully');
@@ -306,6 +312,8 @@ app.use('/api/v1/rates',ratesRoutes);
 
 app.post("/registrationSWS",userSWSController.registrationSWS);
 
+app.post('/submitMOM',userSWSController.submitmom);
+
 app.post("/namesMatch",userSWSController.compareCompanyNames);
 
 app.post("/match",userSWSController.compareCompanyNames);
@@ -342,6 +350,11 @@ app.get("/portfolio", function(req, res){
 	res.render("portfolio");
 });
 
+app.get("/namesResults",function(req, res){
+  results=[{"name":"i"},{"name":"v"}];
+  res.render("namesResults",results);
+})
+
 
 
 app.get('/pdf', async (req, res) => {
@@ -371,11 +384,108 @@ app.get('/pdf', async (req, res) => {
 });
 
 app.get("/pdfs", async(req,res)=>{
-  var pdfs = await Pdf.find({},{ name: 1, _id: 0 });
-  res.send(pdfs);
+  var pdfs = await mom.find({});
+  // res.send(pdfs);
+  res.render("momresults",{requesterDetails:pdfs});
 })
 
+//normal comment
+
+app.get("/pdfss",async(req,res)=>{
+  const id = req.query.id;
+  const pdfss = await Pdf.find({_id:id});
+  
+  // const propname = "_id";
+  const pdfssdata1 = pdfss[0];
+  console.log(typeof pdfss);
+  // console.log("id",pdfssdata);
+  // console.log(typeof pdfssdata);
+  // const arr = Object.entries(pdfss);
+  const json = JSON.stringify(pdfss);
+  // console.log(typeof arr);
+  console.log(typeof json);
+  const slicedStr = json.slice(33,-3);
+  console.log(typeof slicedStr);
+
+  console.log("4",typeof slicedStr);
+  
+  // console.log(slicedStr);
+  // res.send(slicedStr);
+  console.log(typeof pdfss.data);
+  console.log("demo",typeof pdfssdata1);
+  res.send(pdfss);
+  console.log("enka unna");
+  const bf = pdfss[0].buffer.data;
+  const pdfssdata = Buffer.from(bf);
+  console.log("vinay",pdfssdata);
+  // var pdfBuffer = pdfss[0].data;
+  // var pb = pdfBuffer;
+  // console.log(pdfBuffer);
+  // console.log("pb",pb);
+
+  // console.log(pdfss);
+  // console.log(pdfssdata);
+  // res.send(pdfss);
+  PDFParser(pdfssdata, (err, data) => {
+    if (err) throw err;
+    res.send(data.text);
+  });
+
+  // console.log(pdfBuffer);
+  // const pdfString = pdfBuffer.toString('base64');
+
+  // pdfp(pdfString).then(data => {
+  //   const text = data.text;
+  //   console.log(text);
+  // });
+  // PDFparser.pdf2text(pdfBuffer, (err, data) => {
+  //   if (err) {
+  //     return res.status(500).send(err);
+  //   }
+  //   res.send(data);
+  // });
+  // res.send(pdfBuffer);
+});
+
+// app.get("/pdfss",async(req,res)=>{
+//   try{
+//     const id = req.query.id;
+//     // Get PDF data from MongoDB
+//     const pdfData = await Pdf.findById(id);
+
+//     // Create a new PDF document
+//     const pdfDoc = new PDFDocument();
+
+//     // Pipe the PDF document to a buffer
+//     const buffers = [];
+//     pdfDoc.on('data', (buffer) => buffers.push(buffer));
+//     pdfDoc.on('end', () => {
+//       const pdfBuffer = Buffer.concat(buffers);
+//       res.setHeader('Content-Type', 'application/pdf');
+//       res.send(pdfBuffer);
+//     });
+
+//     // Write PDF data to the PDF document
+//     pdfDoc.pipe(fs.createWriteStream('my-document.pdf'));
+//     pdfDoc.end(pdfData.data);
+
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Internal server error');
+//   }
+// });
+
+
+
+
+// app.get("/results",catchAsync(async(req,res)=>{
+//   var result = Result.find({});
+//   res.send(result); 
+// }))
+
 var bodyParser = require('body-parser');
+const catchAsync = require('./utils/catchAsync');
+const mom = require('./models/momModel');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

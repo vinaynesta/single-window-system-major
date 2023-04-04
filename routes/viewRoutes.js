@@ -22,8 +22,11 @@ router.get('/propertytransfer',authController.isLoggedIn,authController.protect,
 router.get('/registration',authController.isLoggedIn,viewsController.registration);
 router.get('/registrationSWS',authController.isLoggedIn,authController.protect,viewsController.registrationSWS);
 router.get('/namesMatch',authController.isLoggedIn,authController.protect,viewsController.namesMatch);
+router.get('/namesResults',authController.isLoggedIn,authController.protect,viewsController.namesResults);
 router.get('/moaaoa',authController.isLoggedIn,authController.protect,viewsController.moaaoa);
 router.get('/upload',authController.isLoggedIn,authController.protect,viewsController.upload);
+router.get('/uploadmom',authController.isLoggedIn,authController.protect,viewsController.uploadmom);
+router.get('/momresults',authController.isLoggedIn,authController.protect,viewsController.momresults);
 router.get('/zonedetails',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.zonedetails);
 router.get('/features',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.features);
 router.get('/verification',authController.isLoggedIn,authController.protect,viewsController.privatekey);
