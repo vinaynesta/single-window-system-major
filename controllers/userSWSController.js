@@ -9,8 +9,7 @@ const Result = require('../models/namesModel');
 const mom = require('../models/momModel');
 // const natural = require('natural');
 // const mongoose = require('mongoose');
-
-
+const stringSimilarity = require('string-similarity');
 
 // import { JaroWinklerDistance } from 'natural';
 const csv = require('csv-parser');
@@ -122,7 +121,7 @@ exports.registrationSWS = catchAsync( async(req,res) => {
     
 })
 
-const stringSimilarity = require('string-similarity');
+
 
 exports.compareCompanyNames = catchAsync( async(req, res)=> {
   
@@ -207,7 +206,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
       res.send("Approved");
      }
      else{
-      data1.status="Approved";
+      data1.status="Rejected";
       data1.save();
       res.send("Rejected");
 

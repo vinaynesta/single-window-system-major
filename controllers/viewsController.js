@@ -137,12 +137,7 @@ exports.moaaoa = catchAsync( async(req,res)=> {
   })
 });
 
-exports.registration = catchAsync( async(req,res)=> {
-  res.render('registration',{
-    title: '| registration',
-  })
-  console.log("love you I");
-});
+
 
 exports.registrationSWS = catchAsync( async(req,res)=> {
   //let doc = await UserSWS.find({});
@@ -235,5 +230,17 @@ exports.namesResults = catchAsync( async(req,res)=> {
 exports.momresults = catchAsync( async(req,res)=> {
   res.render('momresults',{
     title: '| momresults',
+  })
+});
+
+exports.registration = catchAsync( async(req,res)=> {
+  res.render('registration',{
+    title: '| registration',
+  })
+});
+
+exports.companyTransfer = catchAsync( async(req,res)=> {
+  res.render('companyTransfer',{
+    title: '| companyTransfer',
   })
 });

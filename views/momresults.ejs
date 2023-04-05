@@ -8,7 +8,7 @@
             <div class="signup-content" style="    padding: 75px 75px;
             display: flex;
             flex-direction: column;">
-                <div><h2 class="form-title">Ledger</h2></div>
+                <div><h2 class="form-title">MOM details</h2></div>
                 <table class="table table-striped">
                     <thead>
                       <tr>
@@ -19,6 +19,7 @@
                         <th scope="col">State</th>
                         <th scope="col">Liability</th>
                         <th scope="col">Capital</th>
+                        <th scope="col">Status</th>
                       </tr>
                     </thead>
                         <!-- <tr>
@@ -49,9 +50,9 @@
                           <td><%= requesterDetails[i]["liability"] %></td>
                           
                           <td><%= requesterDetails[i]["capital"]%></td>
-                          
-                          
 
+                          <td><%= requesterDetails[i]["status"]%></td>
+                          
                         </tr>
                     <% } %>
                   </table>

@@ -34,7 +34,11 @@
 
                             <div class="prof-links prof-links1" style="margin-top: 30px;">
                                 <% if (a.role!="admin"){ %>
-                                    <div>
+                                <div>
+                                    <i class="fa fa-credit-card-alt" style="font-size: 18px  !important;" data-key="<%= a.privateKey %>" id="pk2" aria-hidden="true"></i>
+                                    <a href="/registration"><span style="font-size: 16px  !important; margin-left: 16px;">Registration</span></a>
+                                </div>
+                                <div>
                                     <i class="fa fa-credit-card-alt" style="font-size: 18px  !important;" data-key="<%= a.privateKey %>" id="pk2" aria-hidden="true"></i>
                                     <a href="/registrationSWS"><span style="font-size: 16px  !important; margin-left: 16px;">Property Registration</span></a>
                                 </div>
@@ -57,11 +61,15 @@
                                 <% if (a.role=="admin"){ %>
                                 <div>
                                     <i class="fa fa-credit-card-alt" style="font-size: 18px  !important;" data-key="<%= a.privateKey %>" id="pk2" aria-hidden="true"></i>
+                                    <a href="/registartion"><span style="font-size: 16px  !important; margin-left: 16px;">Registration</span></a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-credit-card-alt" style="font-size: 18px  !important;" data-key="<%= a.privateKey %>" id="pk2" aria-hidden="true"></i>
                                     <a href="/registrationSWS"><span style="font-size: 16px  !important; margin-left: 16px;">Company Registration</span></a>
                                 </div>
                                 <div>
                                     <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>
-                                    <a href="/propertytransfer"><span style="font-size: 16px  !important; margin-left: 16px;">Company Transfer</span></a>
+                                    <a href="/companyTransfer"><span style="font-size: 16px  !important; margin-left: 16px;">Company Transfer</span></a>
                                 </div>
                                 <div>
                                     <i class="fa fa-exchange" style="font-size: 18px  !important;" aria-hidden="true"></i>

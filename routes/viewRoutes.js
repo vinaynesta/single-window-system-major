@@ -19,9 +19,10 @@ router.get('/profile',authController.isLoggedIn,authController.protect,viewsCont
 router.get('/payment',authController.isLoggedIn,authController.protect,viewsController.getPayment);
 router.get('/assets',authController.isLoggedIn,authController.protect,viewsController.assets);
 router.get('/propertytransfer',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.propertyTransfer);
-router.get('/registration',authController.isLoggedIn,viewsController.registration);
 router.get('/registrationSWS',authController.isLoggedIn,authController.protect,viewsController.registrationSWS);
+router.get('/companyTransfer',authController.isLoggedIn,authController.protect,viewsController.companyTransfer);
 router.get('/namesMatch',authController.isLoggedIn,authController.protect,viewsController.namesMatch);
+router.get('/registration',authController.isLoggedIn,authController.protect,viewsController.registration);
 router.get('/namesResults',authController.isLoggedIn,authController.protect,viewsController.namesResults);
 router.get('/moaaoa',authController.isLoggedIn,authController.protect,viewsController.moaaoa);
 router.get('/upload',authController.isLoggedIn,authController.protect,viewsController.upload);

@@ -23,6 +23,7 @@ const ledgerRouter = require("./routes/ledgerRoutes")
 const propertyRouter = require("./routes/propertyRoutes")
 const ratesRoutes = require('./routes/ratesRoutes')
 const userController = require('./controllers/userController');
+const propertyController = require('./controllers/propertyController');
 const userSWSController = require('./controllers/userSWSController');
 
 // const pdf2json = require('pdf2json');
@@ -311,6 +312,10 @@ app.use('/api/v1/rates',ratesRoutes);
 // });
 
 app.post("/registrationSWS",userSWSController.registrationSWS);
+
+app.post("/registrationn",propertyController.submitproperty);
+
+app.post("/companyTransfer",propertyController.transferProperty);
 
 app.post('/submitMOM',userSWSController.submitmom);
 

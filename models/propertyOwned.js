@@ -41,8 +41,8 @@ const propertyOwnedSchema = new mongoose.Schema({
         lowercase: true
     },
     user: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
+      type: String,
+      required:true,
     },
     tax:{
         type:Number,
