@@ -9,7 +9,9 @@ const Result = require('../models/namesModel');
 const mom = require('../models/momModel');
 // const natural = require('natural');
 // const mongoose = require('mongoose');
-const stringSimilarity = require('string-similarity');
+const GLalgorithm = require('string-similarity');
+
+
 
 // import { JaroWinklerDistance } from 'natural';
 const csv = require('csv-parser');
@@ -133,7 +135,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
 
     for( let i=0 ;i<=10645;i++){
         let name2 = dataclean[i].name;
-        const similarity = stringSimilarity.compareTwoStrings(name1.toLowerCase(), name2.toLowerCase());
+        const similarity = GLalgorithm.compareTwoStrings(name1.toLowerCase(), name2.toLowerCase());
         console.log("score : ",i+" "+similarity);
         if(similarity >= 0.3){
           results.push({nam :data[i].name,sim:similarity});
@@ -189,9 +191,9 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
 
     for(let val of wordsSet){
       let name2 = val;
-      for( let i=0 ;i<=1516;i++){
+      for( let i=0 ;i<=1631;i++){
         console.log("name2",i," ",name2);
-        const similarity = stringSimilarity.compareTwoStrings(delta[i]['jigaboo'].toLowerCase(), name2.toLowerCase());
+        const similarity = GLalgorithm.compareTwoStrings(delta[i]['jigaboo'].toLowerCase(), name2.toLowerCase());
         console.log("score : ",i+" "+similarity);
         if(similarity ==1 ){
           results.push({word :name2,sim:similarity});
@@ -199,6 +201,8 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
         }
     }
   }
+
+  
     console.log("results",results , results.length);
      if(results.length == 0){
        data1.status="Approved";
