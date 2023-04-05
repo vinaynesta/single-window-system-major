@@ -1,8 +1,10 @@
 const property = require('./../models/propertyOwned');
+const rates = require('../models/interestRates');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('./../utils/appError');
+const { details } = require('./viewsController');
 
 
 
@@ -75,44 +77,28 @@ exports.submitproperty = catchAsync( async(req,res) => {
     natureOfUsage: req.body.natureOfUsage,
     user: req.body.aadharId,
      });
-
-    data1.save();
-    res.send(data1);
-
-    const wordsArray = data1.objective.split(" ");
-    console.log("wordsArray",wordsArray);
-    const wordsSet = new Set(wordsArray);
-    console.log("wordsSet",wordsSet);
-
-    const results = [];
-    // let name1 = "vinay";
-
-  for(let val of wordsSet){
-    let name2 = val;
-    for( let i=0 ;i<=1516;i++){
-      console.log("name2",i," ",name2);
-      const similarity = stringSimilarity.compareTwoStrings(delta[i]['jigaboo'].toLowerCase(), name2.toLowerCase());
-      console.log("score : ",i+" "+similarity);
-      if(similarity ==1 ){
-        results.push({word :name2,sim:similarity});
-        // results.data[i].name= similarity;
-      }
-    }
-  }
-  console.log("results",results , results.length);
-   if(results.length == 0){
-     data1.status="Approved";
-     data1.save();
-    res.send("Approved");
-   }
-   else{
-    data1.status="Rejected";
-    data1.save();
-    res.send("Rejected");
-
-   }
-    res.redirect("/account");
-
+    const zoneId = req.body.zoneId;
+    const baseValue= req.body.baseValue;
+    const buildingClassification= req.body.buildingClassification;
+    const floorNo= req.body.floorNo;
+    const occupancy= req.body.occupancy;
+    const area= req.body.area;
+    const natureOfUsage= req.body.natureOfUsage;
+    const user= req.body.aadharId;
+    
+    
+    rates.find({zoneId:zoneId},function(err,details){
+      let cal =0;
+      console.log("details",details[0][buildingClassification]);
+      cal=details[0][buildingClassification]*baseValue*area*details[0][occupancy];
+      console.log("type",typeof cal,cal);
+      data1.tax=cal/100;
+      data1.save();
+   
+      res.redirect('/account');
+    })
+    
+  
 });
 
 exports.transferProperty = catchAsync( async(req,res) => {
