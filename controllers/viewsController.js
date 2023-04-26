@@ -140,8 +140,7 @@ exports.moaaoa = catchAsync( async(req,res)=> {
 
 
 exports.registrationSWS = catchAsync( async(req,res)=> {
-  //let doc = await UserSWS.find({});
-  //console.log(doc);
+ 
   res.render('registrationSWS',{
     title: '| registrationSWS',
     //doc:doc
@@ -242,5 +241,17 @@ exports.registration = catchAsync( async(req,res)=> {
 exports.companyTransfer = catchAsync( async(req,res)=> {
   res.render('companyTransfer',{
     title: '| companyTransfer',
+  })
+});
+
+exports.image = catchAsync( async(req,res)=> {
+  res.render('image',{
+    title: '| image',
+  })
+});
+
+exports.stamp = catchAsync( async(req,res)=> {
+  res.render('stamp',{
+    title: '| stamp',
   })
 });

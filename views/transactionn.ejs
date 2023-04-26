@@ -1,0 +1,59 @@
+
+
+<div class="main">
+
+    <!-- Sign up form -->
+    <section class="signup" id="cpin">
+        <div class="container1" style="width: 1355px !important; max-width: 1500px !important;">
+            <div class="signup-content" style="    padding: 75px 75px;
+            display: flex;
+            flex-direction: column;">
+                <div><h2 class="form-title">Taxes</h2></div>
+                <table class="table table-striped" style="width:95%">
+                    <thead>
+                      <tr>
+                        <!-- <th scope="col"></th>
+                        <th scope="col">Zone Id</th>
+                        <th scope="col">Property Description</th> -->
+                        <th scope="col">Property Tax</th>
+                        <th scope="col">Pay</th>
+                      </tr>
+                    </thead>
+                    <% for(let i=taxDet.length-1;i>=0;i--){ %>
+                        
+                        <tr>
+                          <th scope="row"><%= taxDet[i]["tax"] %></th>
+                          
+                          <td><td><button class="form-submit payment" onClick="reply_click" style="margin-top:auto;size:70%;background: #6dabe4;">Pay</button></td>
+                          
+                        </tr>
+                    <% } %>
+                  </table>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Font Icon -->
+<link rel="stylesheet" href="logFiles/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="logFiles/css/style.css">
+<script src="logFiles/vendor/jquery/jquery.min.js"></script>
+<script src="logFiles/js/main.js"></script>
+<script type="text/javascript">
+  function reply_click(id)
+  {
+      location.assign(`/invoice?id=${id}`)
+  }
+ 
+</script>
+  

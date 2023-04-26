@@ -7,14 +7,21 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const multer = require("multer");
 const globalErrorHandler = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
-// const Result = require('./controllers/userSWSController');
+
 const PDFParser = require('pdf-parse');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
-// const mom = require('./models/momModel');
+const cv = require('opencv4nodejs-prebuilt');
+const {PythonShell} = require("python-shell");
+const { spawn } = require('child_process');
+
+const jimp = require('jimp');
+const PNG = require('pngjs').PNG;
+const pixelmatch = require('pixelmatch');
 
 const userRouter = require('./routes/userRoutes');
 const userSWSRouter = require('./routes/userSWSRoutes');
@@ -26,7 +33,11 @@ const userController = require('./controllers/userController');
 const propertyController = require('./controllers/propertyController');
 const userSWSController = require('./controllers/userSWSController');
 
-// const pdf2json = require('pdf2json');
+
+const properties = require('./models/propertyOwned');
+const loginn = require('./models/logininfo');
+
+
 const csp = require('express-csp');
 
 const app = express();
@@ -35,14 +46,16 @@ app.set('view engine', 'ejs');
 app.set('views',path.join(__dirname,'/views'));  
 
 app.use(express.static(path.join(__dirname,'/public/')));
+app.use(express.static(path.join(__dirname,'/js')));
 
-// Set security HTTP headers
+
+
 app.use(helmet());
 
 //compression
 app.use(compression());
 
-// pdf uploading packages
+
 const mongoose = require('mongoose');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
@@ -55,10 +68,10 @@ app.use(methodOverride('_method'));
 
 //body and json parsing in express
 var bodyParser = require('body-parser');
-var multer = require('multer');
+// var multer = require('multer');
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ dest: "upload/" });
 
 const pdfSchema = new mongoose.Schema({
   name: String,
@@ -306,16 +319,19 @@ app.use('/api/v1/ledger',ledgerRouter);
 app.use('/api/v1/properties',propertyRouter);
 app.use('/api/v1/rates',ratesRoutes);
 
-// app.post('/registrationSWS',userSWSController.registrationSWS);
-// app.post("/registrationSWS", async function (req, res) {
-// 	console.log("requesttttt",req.body);
-// });
+
 
 app.post("/registrationSWS",userSWSController.registrationSWS);
 
 app.post("/registrationn",propertyController.submitproperty);
 
 app.post("/companyTransfer",propertyController.transferProperty);
+
+
+app.post("/image", upload.single("myFile"), (req, res) => {
+  console.log(req.file); // file information
+  res.send("File uploaded successfully");
+});
 
 app.post('/submitMOM',userSWSController.submitmom);
 
@@ -325,28 +341,7 @@ app.post("/match",userSWSController.compareCompanyNames);
 
 app.post("/portfolio", async function (req, res) {
 	console.log("ans",req.body);
-    /*const port = new portfolio({
-    idea: req.body.idea,
-    ask: req.body.ask,
-    equity: req.body.equity,
-    evaluation: req.body.ask/req.body.equity,
-    mobileNumber: req.body.mobileNumber,
-    email: req.body.email,
-    demoVideoLink: req.body.demoVideoLink
-     });
-    console.log(port);
     
-    port.save();
- 
-    uid = req.body.email;
-    console.log("email",uid);
-
-    let pid =port._id;
-    console.log("pid",pid);
-    await Users.findOneAndUpdate(
-        { email: uid, },
-        { $push: { ideas: pid, } ,}
-     );*/
 
     res.redirect("/account");
 });
@@ -364,7 +359,7 @@ app.get("/namesResults",function(req, res){
 
 app.get('/pdf', async (req, res) => {
   try {
-    // const id = '64295cd3bfc053f41a8c8b32';
+    
     const id = req.query.id;
     const pdf = await Pdf.findById(id);
     
@@ -376,8 +371,7 @@ app.get('/pdf', async (req, res) => {
     const pdf2json = new pdf2jsonModule.default();
 
     pdf2json.on('pdfParser_dataReady', data => {
-      // const text = pdf2json.getRawTextContent();
-      // let x = data["Transcoder"];
+      
       res.send(data["Meta"]);
     });
 
@@ -390,32 +384,134 @@ app.get('/pdf', async (req, res) => {
 
 app.get("/pdfs", async(req,res)=>{
   var pdfs = await mom.find({});
-  // res.send(pdfs);
+  
   res.render("momresults",{requesterDetails:pdfs});
 })
 
-//normal comment
+
+
+
+app.get('/demo12', async (req, res) => {
+      const urlToBuffer = async (url) => {
+        return new Promise(async (resolve, reject) => {
+            await jimp.read(url, async (err, image) => {
+                if (err) {
+                    console.log(`error reading image in jimp: ${err}`);
+                    reject(err);
+                }
+                image.resize(400, 400);
+                return image.getBuffer(jimp.MIME_PNG, (err, buffer) => {
+                    if (err) {
+                        console.log(`error converting image url to buffer: ${err}`);
+                        reject(err);
+                    }
+                    resolve(buffer);
+                });
+            });
+        });
+      };
+
+      const compareImage = async (
+        twitterProfilePicURL,
+        assetCDNURL
+      ) => {
+        try {
+            console.log('> Started comparing two images');
+            const img1Buffer = await urlToBuffer(twitterProfilePicURL);
+            const img2Buffer = await urlToBuffer(assetCDNURL);
+            const img1 = PNG.sync.read(img1Buffer);
+            const img2 = PNG.sync.read(img2Buffer);
+            const { width, height } = img1;
+            const diff = new PNG({ width, height });
+    
+            const difference = pixelmatch(
+                img1.data,
+                img2.data,
+                diff.data,
+                width,
+                height,
+                {
+                    threshold: 0.1,
+                }
+            );
+  
+          const compatibility = 100 - (difference * 100) / (width * height);
+          console.log(`${difference} pixels differences`);
+          console.log(`Compatibility: ${compatibility}%`);
+          console.log('< Completed comparing two images');
+          return compatibility;
+      } catch (error) {
+          console.log(`error comparing images: ${error}`);
+          throw error;
+      }
+  };
+  
+  
+  const result = compareImage('https://github.com/mapbox/pixelmatch/blob/HEAD/test/fixtures/4b.png?raw=true',
+      'https://github.com/mapbox/pixelmatch/blob/HEAD/test/fixtures/6diff.png?raw=true'
+  );
+  res.send(result);
+
+ 
+});
+
+app.post("/stamp", async(req,res)=>{
+  let data1 = {};
+
+  const scriptPath = "C:/Users/vinay/Desktop/vinay/single-window-system-major/check.py";
+  const scriptArgs = ['vinay', 'bhargii', 'pranay'];
+  scriptArgs.push(req.body.text);
+
+  const python = spawn('python', [scriptPath, ...scriptArgs]);
+
+  python.stdout.on('data', (chunk) => {
+    console.log(`stdout: ${chunk}`);
+    console.log("typ of", typeof chunk);
+    console.log("data",data1);
+    res.write(chunk);
+  });
+
+  python.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  python.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+  });
+  res.write(data1);
+});
+
+app.get("/conf",async(req,res)=>{
+  const img1 = cv.imread('./public/test/test105.jpg');
+  const img2 = cv.imread('./public/test/original.jpg');
+  
+  const sift = cv.SIFT_create();
+  const keyPoints1 = sift.detect(img1);
+  const keyPoints2 = sift.detect(img2);
+  const descriptors1 = cv.compute(img1, keyPoints1);
+  const descriptors2 = cv.compute(img2, keyPoints2);
+  const matches = cv.matchFlannBased(descriptors1, descriptors2);
+  const matchedImg = cv.drawMatches(img1, keyPoints1, img2, keyPoints2, matches);
+  res.send("done successfully");
+});
 
 app.get("/pdfss",async(req,res)=>{
   const id = req.query.id;
   const pdfss = await Pdf.find({_id:id});
   
-  // const propname = "_id";
+  
   const pdfssdata1 = pdfss[0];
   console.log(typeof pdfss);
-  // console.log("id",pdfssdata);
-  // console.log(typeof pdfssdata);
-  // const arr = Object.entries(pdfss);
+  
   const json = JSON.stringify(pdfss);
-  // console.log(typeof arr);
+  
   console.log(typeof json);
   const slicedStr = json.slice(33,-3);
   console.log(typeof slicedStr);
 
   console.log("4",typeof slicedStr);
   
-  // console.log(slicedStr);
-  // res.send(slicedStr);
+  
   console.log(typeof pdfss.data);
   console.log("demo",typeof pdfssdata1);
   res.send(pdfss);
@@ -423,74 +519,31 @@ app.get("/pdfss",async(req,res)=>{
   const bf = pdfss[0].buffer.data;
   const pdfssdata = Buffer.from(bf);
   console.log("vinay",pdfssdata);
-  // var pdfBuffer = pdfss[0].data;
-  // var pb = pdfBuffer;
-  // console.log(pdfBuffer);
-  // console.log("pb",pb);
-
-  // console.log(pdfss);
-  // console.log(pdfssdata);
-  // res.send(pdfss);
+  
   PDFParser(pdfssdata, (err, data) => {
     if (err) throw err;
     res.send(data.text);
   });
 
-  // console.log(pdfBuffer);
-  // const pdfString = pdfBuffer.toString('base64');
-
-  // pdfp(pdfString).then(data => {
-  //   const text = data.text;
-  //   console.log(text);
-  // });
-  // PDFparser.pdf2text(pdfBuffer, (err, data) => {
-  //   if (err) {
-  //     return res.status(500).send(err);
-  //   }
-  //   res.send(data);
-  // });
-  // res.send(pdfBuffer);
+  
 });
 
-// app.get("/pdfss",async(req,res)=>{
-//   try{
-//     const id = req.query.id;
-//     // Get PDF data from MongoDB
-//     const pdfData = await Pdf.findById(id);
 
-//     // Create a new PDF document
-//     const pdfDoc = new PDFDocument();
+app.get('/transactionn',async (req, res) => {
+  const logs = await loginn.find({});
+  console.log("logs",logs);
+  id= logs[0].loginId;
+  console.log("id",id);
+  const taxes = await properties.find({user:id});
+  console.log("taxes",taxes);
+  res.render("transactionn",{taxDet:taxes});
+});
 
-//     // Pipe the PDF document to a buffer
-//     const buffers = [];
-//     pdfDoc.on('data', (buffer) => buffers.push(buffer));
-//     pdfDoc.on('end', () => {
-//       const pdfBuffer = Buffer.concat(buffers);
-//       res.setHeader('Content-Type', 'application/pdf');
-//       res.send(pdfBuffer);
-//     });
-
-//     // Write PDF data to the PDF document
-//     pdfDoc.pipe(fs.createWriteStream('my-document.pdf'));
-//     pdfDoc.end(pdfData.data);
-
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Internal server error');
-//   }
-// });
-
-
-
-
-// app.get("/results",catchAsync(async(req,res)=>{
-//   var result = Result.find({});
-//   res.send(result); 
-// }))
 
 var bodyParser = require('body-parser');
 const catchAsync = require('./utils/catchAsync');
 const mom = require('./models/momModel');
+const { login } = require('./controllers/authController');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -500,7 +553,7 @@ app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
   
-app.use(globalErrorHandler);  
+app.use(globalErrorHandler);
 
 
 module.exports = app;

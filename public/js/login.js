@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { showAlert } from './alert';
+const login = require('../../models/logininfo');
 
 
 export const login = async (loginData) => {

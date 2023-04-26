@@ -1,0 +1,83 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ORB Stamp Matching</title>
+    <script async src="/js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</head>
+<body>
+    <h1>ORB Stamp Matching</h1>
+    <div id="status"></div><br>
+    <div>
+        <label for="inputImage">Input Image:</label>
+        <input type="file" id="inputImage" accept="image/*">
+    </div>
+    <div>
+        <label for="outputImage">Output Image:</label>
+        <input type="file" id="outputImage" accept="image/*">
+    </div>
+    <div>
+        <button onclick="match()">Match</button>
+    </div>
+    <div>
+        <h2>Results:</h2>
+        <canvas id="canvas"></canvas>
+        <canvas id="inputCanvas"></canvas>
+        <canvas id="outputCanvas"></canvas>
+    </div>
+
+    <script>
+        let img_input;
+        let img_output;
+
+        function onOpenCvReady() {
+            document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+        }
+
+        function match() {
+            let input = document.getElementById('inputImage').files[0];
+            let output = document.getElementById('outputImage').files[0];
+            if (input && output) {
+                let reader = new FileReader();
+                reader.onload = function() {
+                    
+                    img_input = cv.imread('inputCanvas', cv.IMREAD_GRAYSCALE);
+                    cv.imshow('inputCanvas', img_input);
+                }
+                reader.readAsDataURL(input);
+
+                reader.onloadend = function() {
+                    
+                    img_output = cv.imread('outputCanvas', cv.IMREAD_GRAYSCALE);
+                    cv.imshow('outputCanvas', img_output);
+
+                    let orb = new cv.ORB(500, 1.2, 8, 31, 0, 2, cv.ORB_HARRIS_SCORE, 31);
+                    let detector = new cv.FastFeatureDetector();
+                    let kp1 = new cv.KeyPointVector();
+                    let kp2 = new cv.KeyPointVector();
+                    let des1 = new cv.Mat();
+                    let des2 = new cv.Mat();
+                    
+                    let descriptor = new cv.ORB();
+                    
+                    let akaze = new cv.AKAZE();
+                    akaze.detectAndCompute(img_input, new cv.Mat(), kp1, des1);
+                    
+                    detector.detect(img_output, kp2);
+                    const size = Object.keys(kp1).length;
+                    const size1 = Object.keys(des1).length;
+                    console.log("kp1",size);
+                    console.log("dooo",kp1);
+                    console.log("kp2",size1);
+                    
+
+                    console.log("hii",kp1.size(), des1.size(), kp2.size(), des2.size());
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

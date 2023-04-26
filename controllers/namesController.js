@@ -5,12 +5,7 @@ const factory = require('./handlerFactory');
 const APIFeatures = require('./../utils/apiFeatures');
 const UserSWS = require('../models/userSWSModel');
 const nodemailer = require('nodemailer');
-// const natural = require('natural');
-// const mongoose = require('mongoose');
 
-
-
-// import { JaroWinklerDistance } from 'natural';
 const csv = require('csv-parser');
 const fs = require('fs');
 
@@ -57,13 +52,7 @@ const transporter = nodemailer.createTransport({
 
 exports.getAllUsers = factory.getAll(UserSWS);
 
-// const resultSchema = new mongoose.Schema({
-//   resultData : Array,
-// });
 
-// const Result = mongoose.model('Result', resultSchema);
-
-// module.exports = Result;
 
 exports.registrationSWS = catchAsync( async(req,res) => {
     
@@ -124,7 +113,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
         console.log("score : ",i+" "+similarity);
         if(similarity >= 0.3){
           results.push({nam :data[i].name,sim:similarity});
-          // results.data[i].name= similarity;
+          
         }
     }
     
@@ -136,7 +125,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
 
     resulted.save();
 
-    // res.render("namesMatch",{results});
+    
     res.redirect("/namesResults",results);
-    // res.send(results);
+    
   });

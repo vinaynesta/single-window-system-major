@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.route('/')
 .post(ledgerController.createTransaction)
-//.get(authController.isLoggedIn,authController.protect,ledgerController.createTransaction)
+
 
 
 module.exports = router; 

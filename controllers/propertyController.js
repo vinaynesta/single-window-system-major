@@ -5,7 +5,7 @@ const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('./../utils/appError');
 const { details } = require('./viewsController');
-
+const cv = require('opencv4nodejs-prebuilt');
 
 
 exports.createProperty = factory.createOne(property);
@@ -28,35 +28,6 @@ exports.updateProperty = catchAsync(async (req,res,next) => {
 
       next()
 } )
-// exports.updatePropertyPop = catchAsync(async (req,res,next) => { 
-   
-//     const prop = await property.find({status:1});
-//     for(i=0;i<prop.length;i++){
-//       const prop1  = await User.findByIdAndUpdate(req.user.id,
-//         {
-//           $push:{
-//             transactions:prop[i].id
-//           }
-//         },{new:true}
-//       )
-//       let a = prop[i]._id
-//       const prop2 = await property.findByIdAndUpdate(a,{status:0},{new:true})
-//       console.log(prop2.data);
-//     }
-    
-    
-//     //console.log(prop.length,"blueeeeeeeeeeeeeeeeeeee");
-//     //   if (!doc) {
-//     //     return next(new AppError('No document found with that ID', 404));
-//     //   }
-  
-//       res.status(200).json({
-//         status: 'success',
-//         // data: doc
-//       });
-
-//       next()
-// } )
 
 
 exports.getOneProperty =factory.getOne(property);
@@ -77,6 +48,7 @@ exports.submitproperty = catchAsync( async(req,res) => {
     natureOfUsage: req.body.natureOfUsage,
     user: req.body.aadharId,
      });
+     
     const zoneId = req.body.zoneId;
     const baseValue= req.body.baseValue;
     const buildingClassification= req.body.buildingClassification;
@@ -92,7 +64,7 @@ exports.submitproperty = catchAsync( async(req,res) => {
       console.log("details",details[0][buildingClassification]);
       cal=details[0][buildingClassification]*baseValue*area*details[0][occupancy];
       console.log("type",typeof cal,cal);
-      data1.tax=cal/100;
+      data1.tax=cal/1000;
       data1.save();
    
       res.redirect('/account');
@@ -114,3 +86,5 @@ exports.transferProperty = catchAsync( async(req,res) => {
   res.redirect("/account");
 
   });
+
+  

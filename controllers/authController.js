@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const {promisify} = require('util');
 const User = require('./../models/userModel');
 const UserSWS = require('./../models/userSWSModel');
+const login = require('../models/logininfo');
 const jwt = require('jsonwebtoken');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
@@ -48,7 +49,20 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.login = catchAsync(async(req,res,next)=>{
     const email = req.body.email;
-    const password = req.body.password;    
+    const password = req.body.password;
+    
+    const data = await User.find({email:email});
+
+    console.log("data",data);
+    const id = data[0].id;
+    console.log("id",id);
+
+    await login.findOneAndUpdate(
+      { _id: "64375f1ccfb0d0f6c171cd56", },
+      { $set: { loginId: id, } ,}
+    );
+    
+    
     
     if(!email || !password){
         //console.log(email);
@@ -116,7 +130,7 @@ exports.isLoggedIn = async (req, res, next) => {
         req.cookies.jwt,
         process.env.JWT_SECRET
       );
-      //console.log(decoded);
+      
       // 2) Check if user still exists
       const currentUser = await User.findById(decoded.id);
 

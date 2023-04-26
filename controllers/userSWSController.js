@@ -7,13 +7,12 @@ const UserSWS = require('../models/userSWSModel');
 const nodemailer = require('nodemailer');
 const Result = require('../models/namesModel');
 const mom = require('../models/momModel');
-// const natural = require('natural');
-// const mongoose = require('mongoose');
+
 const GLalgorithm = require('string-similarity');
 
 
 
-// import { JaroWinklerDistance } from 'natural';
+
 const csv = require('csv-parser');
 const fs = require('fs');
 
@@ -34,8 +33,7 @@ fs.createReadStream(csvFilePath)
     data.push(row);
   })
   .on('end', () => {
-    console.log('CSV file successfully processed.');
-    console.log(data); // The parsed data will be stored in this array
+    
   });
 
 fs.createReadStream(csvFilePathClean)
@@ -44,8 +42,7 @@ fs.createReadStream(csvFilePathClean)
   dataclean.push(row);
 })
 .on('end', () => {
-  console.log('CSV file successfully processed clean.');
-  console.log(dataclean); // The parsed data will be stored in this array
+  
 });
 
 fs.createReadStream(csvFilePathDelta)
@@ -54,8 +51,7 @@ fs.createReadStream(csvFilePathDelta)
   delta.push(row);
 })
 .on('end', () => {
-  console.log('CSV file successfully processed delta.');
-  console.log(delta); // The parsed data will be stored in this array
+
 });
 
 const transporter = nodemailer.createTransport({
@@ -72,13 +68,7 @@ const transporter = nodemailer.createTransport({
 
 exports.getAllUsers = factory.getAll(UserSWS);
 
-// const resultSchema = new mongoose.Schema({
-//   resultData : Array,
-// });
 
-// const Result = mongoose.model('Result', resultSchema);
-
-// module.exports = Result;
 
 exports.registrationSWS = catchAsync( async(req,res) => {
     
@@ -102,7 +92,7 @@ exports.registrationSWS = catchAsync( async(req,res) => {
         html: `<p>Name: ${data.userNameSWS}</p><p>Age: ${data.age}</p><p>Message: ${message}</p><p>Thank You</p><p>Regards</p><p>MCA</p>`
     };
 
-    // Send email
+    
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
         console.log(error);
@@ -139,9 +129,11 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
         console.log("score : ",i+" "+similarity);
         if(similarity >= 0.3){
           results.push({nam :data[i].name,sim:similarity});
-          // results.data[i].name= similarity;
+          
         }
     }
+    
+    results.sort((a, b) => b.sim - a.sim);
     
     console.log("result: ",results);
 
@@ -151,15 +143,15 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
 
     resulted.save();
 
-    // res.render("namesMatch",{results});
+    
     res.render("namesResults",{requesterDetails:results});
     
-    // res.send(results);
+    
   });
 
   exports.getAllResults = catchAsync(async(req,res)=>{
 
-    Result.find({},function(err,details){
+    Result.find({},{"sim":1,_id:0}).sort({"sim":-1},function(err,details){
 
       console.log("result",requester);
       res.render("namesResults",{requesterDetails : details});
@@ -187,7 +179,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
       console.log("wordsSet",wordsSet);
 
       const results = [];
-      // let name1 = "vinay";
+      
 
     for(let val of wordsSet){
       let name2 = val;
@@ -197,7 +189,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
         console.log("score : ",i+" "+similarity);
         if(similarity ==1 ){
           results.push({word :name2,sim:similarity});
-          // results.data[i].name= similarity;
+          
         }
     }
   }

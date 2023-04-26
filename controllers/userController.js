@@ -5,15 +5,7 @@ const factory = require('./handlerFactory');
 const multer = require('multer');
 const sharp = require('sharp');
 
-// const multerStorage = multer.diskStorage({
-//   destination: (req,file,cb) => {  // cb-- callback
-//     cb(null,'public/img/users');
-//   },
-//   filename: (req,file,cb) => {
-//     const ext = file.mimetype.split('/')[1]; // extention -- jpe,png
-//     cb(null,`user-${req.user.id}-${Date.now()}.${ext}`); 
-//   }
-// });
+
 
 const multerStorage = multer.memoryStorage(); // stored as buffer
 
@@ -63,7 +55,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         )
       );
     }
-    //console.log(req);
     // 2) Filtered out unwanted fields names that are not allowed to be updated
     //const filteredBody = filterObj(req.body,'email','name');  // we can only change these 3 
     const filteredBody = req.body  // we can only change these 3 
@@ -87,7 +78,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.updateCoins = catchAsync(async (req,res,next) => {
-  //console.log("hiii");
+  
   let sentCoins = req.body.sentCoins
   let name = req.body.name
 
@@ -96,10 +87,7 @@ exports.updateCoins = catchAsync(async (req,res,next) => {
   let receiverTot = receiverBal + sentCoins 
   console.log(receiverBal,receiverTot);
 
-  // const newReceiverDoc = await User.findByIdAndUpdate(req.body.receiverPublicAddress,
-  //   {coinBalance: receiverTot,}, {
-  //   new: true
-  // });
+  
 
 
 
@@ -113,8 +101,7 @@ exports.updateCoins = catchAsync(async (req,res,next) => {
   let senderBal = senderDoc.coinBalance
   let senderTot = senderBal - sentCoins 
 console.log(senderBal,senderTot);
-  // const newSenderDoc = await User.findByIdAndUpdate(req.body.senderPublicAddress,
-  //   {coinBalance: senderTot,},{new: true});
+
 
   const newSenderDoc = await User.updateOne({_id:req.body.senderPublicAddress},
     {coinBalance: senderTot,$push:{orders:{price:sentCoins,name:name,coinSent:sentCoins,coinReceived:0,balance:senderTot,to:0,from:req.body.receiverPublicAddress}}}
@@ -146,7 +133,7 @@ exports.updateCash = catchAsync(async (req,res,next) => {
   const newReceiverDoc = await User.findByIdAndUpdate(req.body.receiverPublicAddress,{balance: receiverTot}, {
     new: true
   });
-  //console.log("r",receiverBal,newReceiverDoc);
+  
 
   let senderDoc = await User.findById(req.body.senderPublicAddress);
   let senderBal = senderDoc.balance
@@ -156,7 +143,7 @@ exports.updateCash = catchAsync(async (req,res,next) => {
     new: true
   });
 
-  //console.log("s",senderBal,newSenderDoc);
+  
 
   res.status(201).json({
     status: 'success',

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Image Recognition</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <script async src='/js/opencv.js' type="text/javascript"></script>
+        
+    </head>
+
+    <body>
+        <form action="/image" method="POST" enctype="multipart/form-data">
+            <input type="file" name="myFile">
+            <button type="submit">Upload</button>
+          </form>
+        <img id="input_image"><br>
+        <img id="output_image"><br>
+        <input type="file" id="file_input_image"><br>
+        <input type="file" id="file_input_template"><br>
+        <br><h1>output</h1><br>
+        <canvas id="output"></canvas>
+        <br><h1>stamp img</h1><br>
+        <canvas id="stamp_img"></canvas>
+        <br><h1>template img</h1><br>
+        <canvas id="template_img"></canvas>
+    </body>
+
+    <script>
+        
+        let img_input = document.getElementById("input_image");
+        let img_output = document.getElementById("output_image");
+        let img = document.getElementById("file_input_image");
+        let timg = document.getElementById("file_input_template");
+        
+        
+
+        file_input_image.addEventListener("change",(e)=>{
+            img_input.src = URL.createObjectURL(e.target.files[0]);
+        },false);
+
+
+        file_input_template.addEventListener("change",(e)=>{
+            img_output.src = URL.createObjectURL(e.target.files[0]);
+        },false);
+
+        img_input.onload = function(){
+            let mat = cv.imread(img_input);
+            cv.cvtColor(mat,mat,cv.COLOR_RGB2GRAY);
+            const height = mat.rows;
+            const width = mat.cols;
+            const crop_height = Math.floor(height * 0.3);
+            const crop_width = Math.floor(width * 0.3);
+            const stamp_img = mat.roi(new cv.Rect(width - crop_width, height - crop_height, crop_width, crop_height));
+            
+
+            let mat_temp = cv.imread(img_output);
+            cv.cvtColor(mat_temp,mat_temp,cv.COLOR_RGB2GRAY);
+            const height_t = mat_temp.rows;
+            const width_t = mat_temp.cols;
+            const crop_height_t = Math.floor(height_t * 0.3);
+            const crop_width_t = Math.floor(width_t * 0.3);
+            const stamp_img_temp = mat_temp.roi(new cv.Rect(width_t - crop_width_t, height_t - crop_height_t, crop_width_t, crop_height_t));
+           
+
+            console.log(typeof cv.SIFT);
+            
+            
+            const img1 = cv.imread(img_input);
+            const img2 = cv.imread(img_output);
+            
+            const height1 = img1.rows;
+            const width1 = img1.cols;
+            const height2 = img2.rows;
+            const width2 = img2.cols;
+
+            const crop_height1 = Math.floor(height1 * 0.3);
+            const crop_width1 = Math.floor(width1 * 0.3);
+            const crop_height2 = Math.floor(height2 * 0.3);
+            const crop_width2 = Math.floor(width2 * 0.3);
+
+            const roi1 = new cv.Rect(width1 - crop_width1, height1 - crop_height1, crop_width1, crop_height1);
+            const roi2 = new cv.Rect(width2 - crop_width2, height2 - crop_height2, crop_width2, crop_height2);
+
+            const img1Cropped = new cv.Mat.zeros(img1.rows, img1.cols, cv.CV_8UC1);
+            const img2Cropped = new cv.Mat.zeros(img2.rows, img2.cols, cv.CV_8UC1);
+
+            img1.roi(roi1).copyTo(img1Cropped);
+            img2.roi(roi2).copyTo(img2Cropped);
+
+            
+            const gray1 = new cv.Mat();
+            const gray2 = new cv.Mat();
+            cv.cvtColor(img1Cropped, gray1, cv.COLOR_RGB2GRAY);
+            cv.cvtColor(img2Cropped, gray2, cv.COLOR_RGB2GRAY);
+
+            
+            cv.imshow("stamp_img",img1);
+            cv.imshow("template_img",img2);
+
+            
+            const orb = new cv.ORB(500, 1.2, 8, 31, 0, 2, cv.ORB_HARRIS_SCORE, 31);
+            
+            const kp1 = new cv.KeyPointVector();
+            const des1 = new cv.Mat();
+            const mask1 = new cv.Mat();
+            orb.detectAndCompute(gray1, mask1, kp1, des1);
+            const size = Object.keys(kp1).length;
+            const size1 = Object.keys(des1).length;
+            console.log("kp1",size);
+            console.log("des",size1);
+
+            
+            orb.detect(gray1, kp1, mask1);
+            
+            const bf = new cv.BFMatcher(cv.NORM_HAMMING, true);
+            const mask2 = new cv.Mat();
+            const kp2 = new cv.KeyPointVector();
+            orb.detect(gray2, kp2, mask2);
+            
+            orb.compute(img1, kp1, des1);
+            const des2 = new cv.Mat();
+            orb.compute(img2, kp2, des2);
+            
+            console.log("kp1",size);
+            console.log("des",des1);
+            
+            console.log(des1.size(), des1.type());
+            console.log(des2.size(), des2.type());
+            
+            const matches = new cv.DMatchVector();
+            bf.match(des1, des2, matches);
+            
+            const matchesArray = [];
+            for (let i = 0; i < matches.size(); i++) {
+            matchesArray.push(matches.get(i));
+            }
+
+            matchesArray.sort((a, b) => a.distance - b.distance);
+            console.log("ma",matchesArray);
+            
+
+            const goodMatches = matchesArray.slice(0, 50);
+            const result = new cv.Mat();
+            cv.drawMatches(img1, kp1, img2, kp2, goodMatches, result, {
+            flags: cv.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS,
+            matchColor: new cv.Scalar(0, 255, 0),
+            singlePointColor: new cv.Scalar(255, 0, 0),
+            });
+            cv.imshow('output', result);
+
+            
+
+            const srcPts = goodMatches.map(match => {
+            const pt = kp1[match.queryIdx].pt;
+            if (pt) return pt;
+            else return { x: 0, y: 0 };
+            });
+            const dstPts = goodMatches.map(match => {
+            const pt = kp2[match.trainIdx].pt;
+            if (pt) return pt;
+            else return { x: 0, y: 0 };
+            });
+
+            let M;
+            let mask;
+
+            
+            console.log("src",srcPts);
+            console.log("dst",dstPts);
+            
+            
+            console.log("arr typ",typeof mask);
+            
+            const goodMatchesPoints = goodMatches.map(match => [kp1[match.queryIdx].pt, kp2[match.trainIdx].pt]);
+
+            
+            const goodMatchesMat = cv.matFromArray(goodMatchesPoints.length, 1, cv.CV_64FC4, goodMatchesPoints);
+
+            
+            cv.drawMatches(img1, kp1, img2, kp2, goodMatchesMat, result, { flags: cv.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS });
+           
+
+            cv.imshow('output', result);
+    
+        }
+
+
+        function validateForm(){
+            let mat = cv.imread(img_input);
+            let img = cv.imread(img.files[0]);
+            let timg = cv.imread(timg.files[0]);
+            cv.cvtColor(mat,mat,cv.COLOR_RGB2GRAY);
+            cv.imshow("output",mat);
+            
+            const height = img.rows;
+            const width = img.cols;
+
+            const crop_height = Math.floor(height * 0.3);
+            const crop_width = Math.floor(width * 0.3);
+
+            const stamp_img = img.roi(new cv.Rect(width - crop_width, height - crop_height, crop_width, crop_height));
+            cv.imshow('stamp_img', stamp_img);
+
+            const t_height = timg.rows;
+            const t_width = timg.cols;
+
+            const t_crop_height = Math.floor(t_height * 0.3);
+            const t_crop_width = Math.floor(t_width * 0.3);
+
+            const template_img = timg.roi(new cv.Rect(t_width - t_crop_width, t_height - t_crop_height, t_crop_width, t_crop_height));
+            cv.imshow('template_img', template_img);
+
+            const sift = new cv.SIFT();
+
+            let kp1 = new cv.KeyPointVector();
+            let des1 = new cv.Mat();
+
+            sift.detectAndCompute(stamp_img, cv.noArray(), kp1, des1);
+
+            let kp2 = new cv.KeyPointVector();
+            let des2 = new cv.Mat();
+
+            sift.detectAndCompute(template_img, cv.noArray(), kp2, des2);
+
+            const bf = new cv.BFMatcher(cv.NORM_L2, true);
+
+            const matches = new cv.DMatchVector();
+            bf.match(des1, des2, matches);
+
+            cv.sort(matches, matches, cv.SortFlags.SORT_BY_DISTANCE);
+
+            const good_matches = [];
+            for (let i = 0; i < matches.size(); i++) {
+                if (matches.get(i).distance < 100) {
+                    good_matches.push(matches.get(i));
+                }
+            }
+
+            const src_pts = new cv.Mat();
+            const dst_pts = new cv.Mat();
+            for (let i = 0; i < good_matches.length; i++) {
+                const src_pt = new cv.Point2f(kp1.get(good_matches[i].queryIdx).pt.x, kp1.get(good_matches[i].queryIdx).pt.y);
+                const dst_pt = new cv.Point2f(kp2.get(good_matches[i].trainIdx).pt.x, kp2.get(good_matches[i].trainIdx).pt.y);
+                src_pts.push_back(src_pt);
+                dst_pts.push_back(dst_pt);
+            }
+
+            if (src_pts.rows < 4 || dst_pts.rows < 4) {
+                console.log("Error: Need at least 4 corresponding point sets for findHomography.");
+            } else {
+                const M = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0);
+                const h = stamp_img.rows;
+                const w = stamp_img.cols;
+                const aligned_stamp = new cv.Mat();
+                cv.warpPerspective(stamp_img, aligned_stamp, M, new cv.Size(w, h));
+                const inliers = cv.countNonZero(mask);
+                const confidence = inliers / good_matches.length;
+                console.log(confidence);
+            }
+            }
+    </script>
+</html>

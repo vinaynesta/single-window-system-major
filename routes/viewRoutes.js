@@ -26,6 +26,8 @@ router.get('/registration',authController.isLoggedIn,authController.protect,view
 router.get('/namesResults',authController.isLoggedIn,authController.protect,viewsController.namesResults);
 router.get('/moaaoa',authController.isLoggedIn,authController.protect,viewsController.moaaoa);
 router.get('/upload',authController.isLoggedIn,authController.protect,viewsController.upload);
+router.get('/image',authController.isLoggedIn,authController.protect,viewsController.image);
+router.get('/stamp',authController.isLoggedIn,authController.protect,viewsController.stamp);
 router.get('/uploadmom',authController.isLoggedIn,authController.protect,viewsController.uploadmom);
 router.get('/momresults',authController.isLoggedIn,authController.protect,viewsController.momresults);
 router.get('/zonedetails',authController.isLoggedIn,authController.protect,authController.restrictTo('admin'),viewsController.zonedetails);
