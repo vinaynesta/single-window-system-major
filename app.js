@@ -285,7 +285,7 @@ exports.transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'vinaynesta2002@gmail.com',
-    pass: 'Tyler@2002'
+    pass: 'test@1234'
   }
 });
 
@@ -501,24 +501,11 @@ app.get("/pdfss",async(req,res)=>{
   
   
   const pdfssdata1 = pdfss[0];
-  console.log(typeof pdfss);
-  
   const json = JSON.stringify(pdfss);
-  
-  console.log(typeof json);
   const slicedStr = json.slice(33,-3);
-  console.log(typeof slicedStr);
-
-  console.log("4",typeof slicedStr);
-  
-  
-  console.log(typeof pdfss.data);
-  console.log("demo",typeof pdfssdata1);
   res.send(pdfss);
-  console.log("enka unna");
-  const bf = pdfss[0].buffer.data;
-  const pdfssdata = Buffer.from(bf);
-  console.log("vinay",pdfssdata);
+  const buffer_data = pdfss[0].buffer.data;
+  const pdfssdata = Buffer.from(buffer_data);
   
   PDFParser(pdfssdata, (err, data) => {
     if (err) throw err;
@@ -531,11 +518,8 @@ app.get("/pdfss",async(req,res)=>{
 
 app.get('/transactionn',async (req, res) => {
   const logs = await loginn.find({});
-  console.log("logs",logs);
   id= logs[0].loginId;
-  console.log("id",id);
   const taxes = await properties.find({user:id});
-  console.log("taxes",taxes);
   res.render("transactionn",{taxDet:taxes});
 });
 
