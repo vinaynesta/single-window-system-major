@@ -71,9 +71,6 @@ exports.getAllUsers = factory.getAll(UserSWS);
 
 
 exports.registrationSWS = catchAsync( async(req,res) => {
-    
-
-    console.log("happy life");
 
     const data = new UserSWS({
         userNameSWS: req.body.userNameSWS,
@@ -102,10 +99,6 @@ exports.registrationSWS = catchAsync( async(req,res) => {
         res.send('Email sent');
         }
     });
-    
-    console.log('req body',req.body)
-    
-    console.log("data",data)
 
     data.save();
 
@@ -134,8 +127,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
     }
     
     results.sort((a, b) => b.sim - a.sim);
-    
-    console.log("result: ",results);
+
 
     const resulted = new Result({
       resultData : results,
@@ -152,8 +144,6 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
   exports.getAllResults = catchAsync(async(req,res)=>{
 
     Result.find({},{"sim":1,_id:0}).sort({"sim":-1},function(err,details){
-
-      console.log("result",requester);
       res.render("namesResults",{requesterDetails : details});
     });
 
@@ -171,12 +161,8 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
       capital: req.body.capital,
        });
   
-      // data1.save();
-  
       const wordsArray = data1.objective.split(" ");
-      console.log("wordsArray",wordsArray);
       const wordsSet = new Set(wordsArray);
-      console.log("wordsSet",wordsSet);
 
       const results = [];
       
@@ -184,9 +170,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
     for(let val of wordsSet){
       let name2 = val;
       for( let i=0 ;i<=1631;i++){
-        console.log("name2",i," ",name2);
         const similarity = GLalgorithm.compareTwoStrings(delta[i]['jigaboo'].toLowerCase(), name2.toLowerCase());
-        console.log("score : ",i+" "+similarity);
         if(similarity ==1 ){
           results.push({word :name2,sim:similarity});
           
@@ -194,8 +178,7 @@ exports.compareCompanyNames = catchAsync( async(req, res)=> {
     }
   }
 
-  
-    console.log("results",results , results.length);
+ 
      if(results.length == 0){
        data1.status="Approved";
        data1.save();
